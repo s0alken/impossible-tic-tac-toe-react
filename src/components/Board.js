@@ -52,7 +52,8 @@ export default function Board() {
         console.log(isWinner);
     }, [isWinner]); */
 
-
+    //testing
+    
     function handleQuit() {
         setGameType(null);
         setPlayerMark(null);
