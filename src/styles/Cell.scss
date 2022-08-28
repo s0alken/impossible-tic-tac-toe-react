@@ -1,0 +1,70 @@
+@import './_variables.scss';
+
+.cell {
+    aspect-ratio: 1;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: $semi-dark-navi;
+    box-shadow: inset 0 -.8rem 0 #10212A;
+    border-radius: 1.5rem;
+    border: none;
+
+    position: relative;
+
+    transition: background-color .3s;
+
+    &:hover {
+        cursor: pointer;
+    }
+
+    &--cross {
+        background: $semi-dark-navi url(../assets/icon-x.svg) no-repeat center;
+        background-size: 45.71%;
+
+        &.winner {
+            background: $light-blue;
+            box-shadow: inset 0 -.8rem 0 hsl(178, 78%, 31%);
+
+            &::after {
+                -webkit-mask-image: url(../assets/icon-x.svg);
+                mask-image: url(../assets/icon-x.svg);
+            }
+        }
+    }
+
+    &--circle {
+        background: $semi-dark-navi url(../assets/icon-o.svg) no-repeat center;
+        background-size: 45.71%;
+
+        &.winner {
+            background: $light-yellow;
+            box-shadow: inset 0 -.8rem 0 hsl(39, 83%, 44%);
+
+            &::after {
+                -webkit-mask-image: url(../assets/icon-o.svg);
+                mask-image: url(../assets/icon-o.svg);
+            }
+        }
+    }
+
+    &.winner {
+
+        &::after {
+            content: "";
+
+            width: 45.71%;
+            height: 45.71%;
+
+            -webkit-mask-size: cover;
+            mask-size: cover;
+            background-color: $dark-navi;
+        }
+    }
+
+    &.played:hover {
+        cursor: not-allowed;
+    }
+}

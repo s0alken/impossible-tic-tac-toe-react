@@ -1,0 +1,17 @@
+@import './_variables.scss';
+
+.board {
+
+    &.cross .cell:not(.cell--cross):not(.cell--circle):hover,
+    &.cross .cell:not(.cell--cross):not(.cell--circle):focus {
+        background: $semi-dark-navi url(../assets/icon-x-outline.svg) no-repeat center;
+        background-size: 45.71%;
+    }
+
+    &.circle .cell:not(.cell--cross):not(.cell--circle):hover,
+    &.circle .cell:not(.cell--cross):not(.cell--circle):focus {
+        background: $semi-dark-navi url(../assets/icon-o-outline.svg) no-repeat center;
+        background-size: 45.71%;
+    }
+
+}

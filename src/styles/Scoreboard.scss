@@ -1,0 +1,44 @@
+@import './_variables.scss';
+
+.scoreboard {
+    grid-template-rows: 7.2rem;
+    column-gap: 2rem;
+
+    color: $dark-navi;
+    text-transform: uppercase;
+
+    @media only screen and (max-width: $br-sm) {
+        grid-template-rows: 6.4rem;
+
+        font-size: 1.2rem;
+        line-height: 1.5rem;
+        letter-spacing: .075rem;
+
+        &__total {
+            font-size: 2rem;
+            line-height: 2.5rem;
+            letter-spacing: .125rem;
+        }
+    }
+
+    &__score {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        border-radius: 1.5rem;
+
+        &--you {
+            background-color: $light-blue;
+        }
+
+        &--tie {
+            background-color: $silver;
+        }
+
+        &--cpu {
+            background-color: $light-yellow;
+        }
+    }
+}

@@ -1,0 +1,152 @@
+@import './_variables.scss';
+
+.menu {
+    max-width: 46rem;
+
+    align-self: center;
+
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 4rem;
+    color: $silver;
+
+    text-align: center;
+
+    margin: 2.4rem;
+
+    &>* {
+        flex: 0 1 46rem;
+    }
+
+    @media only screen and (max-width: $br-sm) {
+        row-gap: 3.2rem;
+    }
+
+    &__logo {
+        display: flex;
+        justify-content: center;
+    }
+
+    &__heading {
+        margin-bottom: 2.4rem;
+    }
+
+    &__player-mark {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        background: $semi-dark-navi;
+        box-shadow: inset 0 -.8rem 0 hsl(201, 45%, 11%);
+        border-radius: 1.5rem;
+
+        padding: 2.4rem;
+        padding-bottom: 3rem;
+    }
+
+    &__radio-wrapper {
+        align-self: stretch;
+        background: $dark-navi;
+        padding: .9rem .8rem;
+        border-radius: 1rem;
+        margin-bottom: 1.7rem;
+    }
+
+    &__radio-container {
+        display: flex;
+        position: relative;
+
+        .radio {
+            flex: 1;
+            opacity: 0;
+            z-index: 1;
+            height: 5.4rem;
+
+            &__label {
+                width: 50%;
+                position: absolute;
+
+                z-index: 10;
+
+                border-radius: 1rem;
+
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                padding: 1.1rem;
+
+                transition: all .3s;
+
+                &:hover {
+                    cursor: pointer;
+                }
+
+                &--circle {
+                    left: 50%;
+                }
+            }
+
+            &__icon {
+                width: 3.2rem;
+                height: 3.2rem;
+
+                -webkit-mask-size: cover;
+                mask-size: cover;
+                background-color: $silver;
+
+                transition: all .3s;
+
+                &--cross {
+                    -webkit-mask-image: url(../assets/icon-x.svg);
+                    mask-image: url(../assets/icon-x.svg);
+                }
+
+                &--circle {
+                    -webkit-mask-image: url(../assets/icon-o.svg);
+                    mask-image: url(../assets/icon-o.svg);
+                }
+            }
+
+            &__slider {
+                width: 50%;
+                height: 100%;
+                border-radius: 1rem;
+                background-color: $silver;
+
+                position: absolute;
+                left: 0;
+                top: 0;
+
+                transition: all .3s;
+            }
+
+            &:not(:checked)+.radio__label:hover {
+                background-color: hsla(198, 23%, 72%, 0.05);
+            }
+
+            &:checked+.radio__label .radio__icon {
+                background-color: $dark-navi;
+            }
+
+            &-circle:checked~.radio__slider {
+                left: 50%;
+            }
+        }
+    }
+
+    &__note {
+        opacity: 0.5;
+        text-transform: uppercase;
+    }
+
+    &__options {
+        display: flex;
+        flex-direction: column;
+        row-gap: 2rem;
+
+        @media only screen and (max-width: $br-sm) {
+            row-gap: 1.6rem;
+        }
+    }
+}

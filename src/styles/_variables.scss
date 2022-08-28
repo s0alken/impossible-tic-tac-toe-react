@@ -1,0 +1,60 @@
+//Colors
+$dark-navi: hsl(202, 32%, 15%);
+$semi-dark-navi: #1F3641;
+
+$silver: #A8BFC9;
+$silver-hover: #DBE8ED;
+
+$light-blue: #31C3BD;
+$light-blue-hover: #65E9E4;
+
+$light-yellow: #F2B137;
+$light-yellow-hover: #FFC860;
+
+//Fonts
+$font-primary: 'Outfit', sans-serif;
+
+//Breakpoint
+$br-sm: 25em; //400px
+$br-md: 34.375em; //550px
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@500;700&display=swap');
+
+.heading-lg {
+    font-weight: 700;
+    font-size: 4rem;
+    line-height: 5rem;
+    letter-spacing: .25rem;
+    text-transform: uppercase;
+
+    @media only screen and (max-width: $br-md) {
+        font-weight: 700;
+        font-size: 2.4rem;
+        line-height: 3rem;
+        letter-spacing: .15rem;
+    }
+}
+
+.heading-md {
+    font-weight: 700;
+    font-size: 2.4rem;
+    line-height: 3rem;
+    letter-spacing: .15rem;
+    text-transform: uppercase;
+}
+
+.heading-sm {
+    font-weight: 700;
+    font-size: 2rem;
+    line-height: 2.5rem;
+    letter-spacing: .125rem;
+    text-transform: uppercase
+}
+
+.heading-xs {
+    font-weight: 700;
+    font-size: 1.6rem;
+    line-height: 2rem;
+    letter-spacing: .1rem;
+    text-transform: uppercase;
+}

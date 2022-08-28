@@ -1,0 +1,70 @@
+@import './_variables.scss';
+
+.header {
+    grid-template-rows: 5.2rem;
+
+    @media only screen and (max-width: $br-sm) {
+        grid-template-rows: 4rem;
+        margin-bottom: 4rem;
+    }
+
+    &__logo {
+        align-self: center;
+    }
+
+    &__turn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        padding-bottom: .4rem;
+
+        background-color: $semi-dark-navi;
+        box-shadow: inset 0 -.4rem 0 hsl(201, 45%, 11%);
+        border-radius: 1rem;
+
+        color: $silver;
+
+        @media only screen and (max-width: $br-sm) {
+            border-radius: .5rem;
+
+            font-size: 1.4rem;
+            line-height: 1.8rem;
+
+            letter-spacing: .0875rem;
+        }
+
+        &-icon {
+            width: 2rem;
+            height: 2rem;
+
+            -webkit-mask-size: cover;
+            mask-size: cover;
+            background-color: currentColor;
+
+            margin-right: 1.3rem;
+
+            @media only screen and (max-width: $br-sm) {
+                width: 1.6rem;
+                height: 1.6rem;
+
+                margin-right: .9rem;
+            }
+
+            &--cross {
+                -webkit-mask-image: url(../assets/icon-x.svg);
+                mask-image: url(../assets/icon-x.svg);
+            }
+
+            &--circle {
+                -webkit-mask-image: url(../assets/icon-o.svg);
+                mask-image: url(../assets/icon-o.svg);
+            }
+        }
+    }
+
+    &__button-container {
+        display: flex;
+        justify-content: flex-end;
+    }
+}

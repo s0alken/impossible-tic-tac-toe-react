@@ -1,0 +1,24 @@
+@import './_variables.scss';
+
+.game {
+    max-width: 46rem;
+
+    align-self: center;
+
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+
+    margin: 2.4rem;
+
+    >* {
+        flex: 0 1 46rem;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+    }
+
+    @media only screen and (max-width: $br-sm) {
+        align-self: flex-start;
+    }
+}

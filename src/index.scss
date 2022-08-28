@@ -1,0 +1,32 @@
+@import './styles/_variables.scss';
+
+*,
+*::before,
+*::after {
+  padding: 0;
+  margin: 0;
+  box-sizing: inherit;
+}
+
+html {
+  box-sizing: border-box;
+  font-size: 62.5%;
+}
+
+body {
+  font-family: $font-primary;
+  font-weight: 500;
+  font-size: 1.4rem;
+  line-height: 1.8rem;
+  letter-spacing: .0875rem;
+
+  width: 100%;
+  min-height: 100vh;
+
+  /* overflow: hidden;
+  position: absolute;
+  top: 0;
+  left: 0; */
+
+  background-color: $dark-navi;
+}

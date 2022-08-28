@@ -1,24 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+
+import React, { useState } from "react";
+import Game from "./components/Game";
+import Main from "./components/Main";
+import Menu from "./components/Menu";
+import { GameTypeContext } from "./context/GameTypeContext";
 
 function App() {
+
+  const [gameType, setGameType] = useState(null);
+  const [playerMark, setPlayerMark] = useState(null);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Main>
+      {playerMark && gameType ?
+        <GameTypeContext.Provider value={{
+          gameType,
+          setPlayerMark,
+          setGameType,
+          player1: playerMark,
+          player2: playerMark === 'cross' ? 'circle' : 'cross',
+        }}>
+          <Game />
+        </GameTypeContext.Provider> :
+        <Menu setGameType={setGameType} setPlayerMark={setPlayerMark} />}
+    </Main>
   );
 }
 

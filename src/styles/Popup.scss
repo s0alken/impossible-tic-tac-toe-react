@@ -1,0 +1,82 @@
+@import './_variables.scss';
+
+.popup {
+    display: none;
+    align-items: center;
+
+    height: 100vh;
+    width: 100%;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    background-color: hsla(0, 0%, 0%, 0.725);
+
+    &.show {
+        display: flex;
+    }
+
+    &__menu {
+        flex: 1;
+        height: 26.6rem;
+        background-color: $semi-dark-navi;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        //padding: 4.5rem;
+
+        @media only screen and (max-width: $br-md) {
+            height: 22.8rem;
+            //padding: 2rem;
+        }
+    }
+
+    &__result {
+        color: $silver;
+        margin-bottom: 1.6rem;
+
+        @media only screen and (max-width: $br-md) {
+            font-size: 1.4rem;
+            line-height: 1.8rem;
+            letter-spacing: .0875rem;
+        }
+    }
+
+    &__heading {
+        display: flex;
+        align-items: center;
+        gap: 2.4rem;
+        margin-bottom: 2.4rem;
+        text-align: center;
+
+        @media only screen and (max-width: $br-md) {
+            gap: .8rem;
+
+            &-icon {
+                width: 3rem;
+                height: 3rem;
+            }
+        }
+
+        &--circle {
+            color: $light-yellow;
+        }
+
+        &--cross {
+            color: $light-blue;
+        }
+
+        &--tie {
+            color: $silver;
+        }
+    }
+
+    &__options {
+        display: flex;
+        gap: 1.6rem;
+    }
+}

@@ -1,0 +1,98 @@
+@import './_variables.scss';
+
+.btn {
+    font-family: inherit;
+    color: $dark-navi;
+    border: none;
+    text-transform: uppercase;
+    transition: background-color .2s, transform .2s;
+
+    &:hover {
+        cursor: pointer;
+        transform: translateY(-.3rem);
+    }
+
+    &-lg {
+        font-weight: 700;
+        font-size: 2rem;
+        line-height: 2.5rem;
+        letter-spacing: .125rem;
+
+        border-radius: 1.5rem;
+
+        padding: 1.7rem 0 2.5rem;
+
+        @media only screen and (max-width: $br-sm) {
+            font-size: 1.6rem;
+            line-height: 2rem;
+            letter-spacing: .1rem;
+        }
+    }
+
+    &-md {
+        font-weight: 700;
+        font-size: 1.6rem;
+        line-height: 2rem;
+        letter-spacing: .1rem;
+
+        border-radius: 1rem;
+
+        padding: 1.6rem;
+    }
+
+    &--yellow {
+        background: $light-yellow;
+        box-shadow: inset 0 -.8rem 0 hsl(39, 83%, 44%);
+
+        &:hover {
+            background-color: $light-yellow-hover;
+        }
+
+        &.btn-md {
+            box-shadow: inset 0 -.4rem 0 hsl(39, 83%, 44%);
+        }
+    }
+
+    &--cyan {
+        background: $light-blue;
+        box-shadow: inset 0 -.8rem 0 hsl(178, 78%, 31%);
+
+        &:hover {
+            background-color: $light-blue-hover;
+        }
+
+        &.btn-md {
+            box-shadow: inset 0 -.4rem 0 hsl(39, 83%, 44%);
+        }
+    }
+
+    &--silver {
+        background: $silver;
+        box-shadow: inset 0 -.8rem 0 hsl(199, 17%, 51%);
+
+        &:hover {
+            background-color: $silver-hover;
+        }
+
+        &.btn-md {
+            box-shadow: inset 0 -.4rem 0 hsl(199, 17%, 51%);
+        }
+
+        &.restart {
+            @media only screen and (max-width: $br-sm) {
+                border-radius: .5rem;
+                padding: 1.231rem;
+    
+                font-size: 1.4rem;
+                line-height: 1.8rem;
+    
+                letter-spacing: .0875rem;
+    
+                .btn__icon {
+                    width: 1.538rem;
+                    height: 1.538rem;
+                }
+            }
+        }
+    }
+}
