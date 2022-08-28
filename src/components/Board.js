@@ -1,23 +1,21 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
+import '../styles/Board.scss';
 import Cell from './Cell';
 import Popup from './Popup';
+import PopupWinnerContent from './PopupWinnerContent';
 import checkWinner from '../utils/checkWinner';
-import '../styles/Board.scss';
 import { GameContext } from '../context/GameContext';
 import { GameTypeContext } from '../context/GameTypeContext';
 import useCpuMove from '../hooks/useCpuMove';
 import delay from '../utils/delay';
-import icon_o from '../assets/icon-o.svg';
-import icon_x from '../assets/icon-x.svg';
-import Button from './Button';
 
 export default function Board() {
 
-    const [board, setBoard] = useState(() => Array(9).fill(null));
-    const [isWinner, setIsWinner] = useState(null);
-
-    const { turn, setTurn } = useContext(GameContext);
+    const { turn, setTurn, board, setBoard, isWinner, setIsWinner, score, setScore } = useContext(GameContext);
     const { player1, player2, setPlayerMark, setGameType } = useContext(GameTypeContext);
+
+    const [isPopupOpen, setIsPopupOpen] = useState(false);
+    const [winnerClass, setWinnerClass] = useState(null);
 
     const { getMove } = useCpuMove();
 
@@ -34,10 +32,10 @@ export default function Board() {
         const newBoard = [...board];
         const cpuMove = getMove([...newBoard]);
         newBoard[cpuMove] = player2;
-        await delay(500);
+        await delay(700);
         setBoard(newBoard);
         setTurn(turn === 'circle' ? 'cross' : 'circle');
-    }, [board, getMove, player2, setTurn, turn, isWinner]
+    }, [board, setBoard, getMove, isWinner, player2, turn, setTurn]
     )
 
     useEffect(() => {
@@ -46,14 +44,18 @@ export default function Board() {
 
     useEffect(() => {
         setIsWinner(checkWinner(board));
-    }, [board])
+    }, [board, setIsWinner]);
 
-   /*  useEffect(() => {
-        console.log(isWinner);
-    }, [isWinner]); */
+    useEffect(() => {
+        if (!isWinner) return;
+        const newScore = { ...score };
+        newScore[isWinner] += 1;
+        setScore(newScore);
+        setIsPopupOpen(true);
+        setWinnerClass(isWinner);
+        setIsWinner(null);
+    }, [isWinner, setIsWinner, score, setScore]);
 
-    //testing
-    
     function handleQuit() {
         setGameType(null);
         setPlayerMark(null);
@@ -63,6 +65,7 @@ export default function Board() {
         setIsWinner(null);
         setBoard(() => Array(9).fill(null));
         setTurn('cross');
+        setIsPopupOpen(false);
     }
 
     return (
@@ -78,22 +81,8 @@ export default function Board() {
                     )
                 })}
             </div>
-            <Popup
-                winner={isWinner}
-                player1={player1}
-                className={`popup ${isWinner ? 'show' : ''}`}
-            >
-                <p className="popup__result heading-xs">
-                    {isWinner === player1 ? 'You won!' : 'Oh no, you lost!'}
-                </p>
-                <h1 className={`popup__heading heading-lg popup__heading--${isWinner}`}>
-                    <img src={isWinner === 'circle' ? icon_o : icon_x} alt="Cross Logo" className="popup__heading-icon" />
-                    Takes the round
-                </h1>
-                <div className="popup__options">
-                    <Button className="btn btn-md btn--silver" onClick={handleQuit}>Quit</Button>
-                    <Button className="btn btn-md btn--yellow btn-next-round" onClick={handleNextRound}>Next round</Button>
-                </div>
+            <Popup className={`popup ${isPopupOpen ? 'show' : ''}`}>
+                <PopupWinnerContent winner={winnerClass} handleQuit={handleQuit} handleNextRound={handleNextRound} />
             </Popup>
         </>
     )
