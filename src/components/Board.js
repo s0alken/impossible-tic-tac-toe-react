@@ -48,8 +48,8 @@ export default function Board() {
     }, [board, setBoard, getMove, isWinner, player2, turn, setTurn]);
 
     useEffect(() => {
-        if (turn === player2) makeCpuMove();
-    }, [makeCpuMove, player2, turn]);
+        if (!checkWinner(board) && turn === player2) makeCpuMove();
+    }, [makeCpuMove, player2, turn, board]);
 
     useEffect(() => {
         setIsWinner(checkWinner(board));

@@ -17,7 +17,7 @@ export default function Scoreboard() {
         <div className="scoreboard">
             <div className={`scoreboard__score scoreboard__score--${player1}`}>
                 <span className="scoreboard__player">{`${labels[player1]} (You)`}</span>
-                <h2 className="scoreboard__total heading-md cross-total">{score.circle}</h2>
+                <h2 className="scoreboard__total heading-md cross-total">{score[player1]}</h2>
             </div>
             <div className="scoreboard__score scoreboard__score--tie">
                 <span className="scoreboard__player">Ties</span>
@@ -25,7 +25,7 @@ export default function Scoreboard() {
             </div>
             <div className={`scoreboard__score scoreboard__score--${player2}`}>
             <span className="scoreboard__player">{`${labels[player2]} (Cpu)`}</span>
-                <h2 className="scoreboard__total heading-md circle-total">{score.cross}</h2>
+                <h2 className="scoreboard__total heading-md circle-total">{score[player2]}</h2>
             </div>
         </div>
     )

@@ -20,7 +20,7 @@ export default function PopupWinnerContent({ winner, handleQuit, handleNextRound
     )
 
     const TieContent = () => (
-        <h1 class="popup__heading heading-lg popup__heading--tie">
+        <h1 className="popup__heading heading-lg popup__heading--tie">
             Round tied
         </h1>
     )
