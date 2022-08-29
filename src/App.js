@@ -10,7 +10,7 @@ function App() {
   const [gameType, setGameType] = useState(null);
   const [playerMark, setPlayerMark] = useState(null);
 
-  const difficulty = "impossible";
+  const difficulty = "medium";
 
   return (
     <Main>

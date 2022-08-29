@@ -26,6 +26,7 @@ export default function Board() {
 
     const [isPopupOpen, setIsPopupOpen] = useState(false);
     const [winnerClass, setWinnerClass] = useState(null);
+    const [winnerRow, setWinnerRow] = useState([]);
 
     const { getMove } = useCpuMove();
 
@@ -55,37 +56,46 @@ export default function Board() {
         setIsWinner(checkWinner(board));
     }, [board, setIsWinner]);
 
-    useEffect(() => {
+    const setNextGame = async () => {
         if (!isWinner) return;
         const newScore = { ...score };
         newScore[isWinner.winner] += 1;
         setScore(newScore);
-        setIsPopupOpen(true);
+        setWinnerRow(isWinner.winnerRow);
         setWinnerClass(isWinner.winner);
         setIsWinner(null);
-    }, [isWinner, setIsWinner, score, setScore]);
+        await delay(1000);
+        setIsPopupOpen(true);
+    }
 
-    function handleQuit() {
+    useEffect(() => {
+        setNextGame();
+    });
+
+    const handleQuit = () => {
         setGameType(null);
         setPlayerMark(null);
     }
 
-    function handleNextRound() {
+    const handleNextRound = () => {
         setIsWinner(null);
         setBoard(() => Array(9).fill(null));
         setTurn('cross');
         setIsPopupOpen(false);
+        setWinnerRow([]);
     }
 
     return (
         <>
             <div className={`board ${turn}`}>
                 {board.map((value, index) => {
+                    let className = `cell ${value ? `cell--${value}` : ''}`;
+                    className += winnerRow.includes(index) ? ' winner' : '';
                     return (
                         <Cell
                             key={index}
                             onClick={() => handleOnClick(index)}
-                            className={`cell ${value ? `cell--${value}` : ''}`}
+                            className={className}
                         />
                     )
                 })}
