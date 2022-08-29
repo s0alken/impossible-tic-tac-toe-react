@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
-import { GameTypeContext } from '../context/GameTypeContext';
+import { GameConfigContext } from '../context/GameConfigContext';
 import Button from './Button';
 import icon_circle from '../assets/icon-o.svg';
 import icon_cross from '../assets/icon-x.svg';
 
 export default function PopupWinnerContent({ winner, handleQuit, handleNextRound }) {
-    const { player1 } = useContext(GameTypeContext);
+    const { player1 } = useContext(GameConfigContext);
 
     const WinnerContent = () => (
         <>

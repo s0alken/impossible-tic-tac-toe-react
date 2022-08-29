@@ -5,7 +5,7 @@ import Popup from './Popup';
 import PopupWinnerContent from './PopupWinnerContent';
 import checkWinner from '../utils/checkWinner';
 import { GameContext } from '../context/GameContext';
-import { GameTypeContext } from '../context/GameTypeContext';
+import { GameConfigContext } from '../context/GameConfigContext';
 import useCpuMove from '../hooks/useCpuMove';
 import delay from '../utils/delay';
 
@@ -22,7 +22,7 @@ export default function Board() {
         setScore
     } = useContext(GameContext);
 
-    const { player1, player2, setPlayerMark, setGameType } = useContext(GameTypeContext);
+    const { player1, player2, setPlayerMark, setGameType } = useContext(GameConfigContext);
 
     const [isPopupOpen, setIsPopupOpen] = useState(false);
     const [winnerClass, setWinnerClass] = useState(null);

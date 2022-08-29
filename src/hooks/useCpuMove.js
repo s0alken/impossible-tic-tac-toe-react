@@ -1,13 +1,14 @@
 import { useContext } from 'react';
-import { GameTypeContext } from '../context/GameTypeContext';
+import { GameConfigContext } from '../context/GameConfigContext';
 import checkWinner from '../utils/checkWinner';
 
 export default function useCpuMove() {
-    const { player1, player2 } = useContext(GameTypeContext);
+    const { player1, player2, difficulty } = useContext(GameConfigContext);
 
     const getMove = board => {
 
-        if(board.every(cell => !cell)) return 4;
+        if (board.every(cell => !cell)) return pickRandomMove(board);
+        if (!probability(levels[difficulty])) return pickRandomMove(board);
 
         let bestScore = -Infinity;
         let moveIndex;
@@ -71,6 +72,27 @@ export default function useCpuMove() {
             return bestScore;
 
         }
+    }
+
+    const levels = {
+        impossible: 1,
+        hard: .75,
+        medium: .5,
+        easy: -1,
+    }
+
+    const probability = n => {
+        return Math.random() < n;
+    }
+
+    const pickRandomMove = board => {
+        let move = Math.floor(Math.random() * board.length);
+
+        while (board[move]) {
+            move = Math.floor(Math.random() * board.length);
+        }
+
+        return move;
     }
 
     return { getMove };

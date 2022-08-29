@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
 import { GameContext } from '../context/GameContext';
-import { GameTypeContext } from '../context/GameTypeContext';
+import { GameConfigContext } from '../context/GameConfigContext';
 import '../styles/Scoreboard.scss';
 
 export default function Scoreboard() {
 
-    const {player1, player2} = useContext(GameTypeContext)
+    const {player1, player2} = useContext(GameConfigContext)
     const {score} = useContext(GameContext);
 
     const labels = {
