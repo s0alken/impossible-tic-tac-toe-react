@@ -58,11 +58,14 @@ export default function Board() {
 
     const setNextGame = async () => {
         if (!isWinner) return;
+        await delay(500);
+        setWinnerRow(isWinner.winnerRow);
+        setWinnerClass(isWinner.winner);
+
         const newScore = { ...score };
         newScore[isWinner.winner] += 1;
         setScore(newScore);
-        setWinnerRow(isWinner.winnerRow);
-        setWinnerClass(isWinner.winner);
+
         setIsWinner(null);
         await delay(1000);
         setIsPopupOpen(true);
