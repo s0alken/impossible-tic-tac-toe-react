@@ -29,7 +29,7 @@
 
         border-radius: 1.5rem;
 
-        &--you {
+        &--cross {
             background-color: $light-blue;
         }
 
@@ -37,7 +37,7 @@
             background-color: $silver;
         }
 
-        &--cpu {
+        &--circle {
             background-color: $light-yellow;
         }
     }

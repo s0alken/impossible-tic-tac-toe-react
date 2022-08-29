@@ -17,11 +17,11 @@ export default function checkWinner(board) {
         const [a, b, c] = winningCombinations[i];
 
         if (board[a] && board[a] === board[b] && board[b] === board[c]) {
-            return board[a];
+            return {winner: board[a], winnerRow: [a, b, c]};
         }
     }
 
-    if (!isAvailableCells([...board])) return "tie";
+    if (!isAvailableCells([...board])) return {winner: 'tie', winnerRow: []};
 
     return null;
 }

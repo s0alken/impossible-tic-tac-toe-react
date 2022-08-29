@@ -42,7 +42,7 @@ export default function useCpuMove() {
     const minimax = (board, isMaximizing, deph) => {
         const result = checkWinner([...board]);
 
-        if (result) return getScore(result, deph);
+        if (result) return getScore(result.winner, deph);
 
         if (isMaximizing) {
             let bestScore = -Infinity;

@@ -11,7 +11,17 @@ import delay from '../utils/delay';
 
 export default function Board() {
 
-    const { turn, setTurn, board, setBoard, isWinner, setIsWinner, score, setScore } = useContext(GameContext);
+    const {
+        turn,
+        setTurn,
+        board,
+        setBoard,
+        isWinner,
+        setIsWinner,
+        score,
+        setScore
+    } = useContext(GameContext);
+
     const { player1, player2, setPlayerMark, setGameType } = useContext(GameTypeContext);
 
     const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -35,8 +45,7 @@ export default function Board() {
         await delay(700);
         setBoard(newBoard);
         setTurn(turn === 'circle' ? 'cross' : 'circle');
-    }, [board, setBoard, getMove, isWinner, player2, turn, setTurn]
-    )
+    }, [board, setBoard, getMove, isWinner, player2, turn, setTurn]);
 
     useEffect(() => {
         if (turn === player2) makeCpuMove();
@@ -49,10 +58,10 @@ export default function Board() {
     useEffect(() => {
         if (!isWinner) return;
         const newScore = { ...score };
-        newScore[isWinner] += 1;
+        newScore[isWinner.winner] += 1;
         setScore(newScore);
         setIsPopupOpen(true);
-        setWinnerClass(isWinner);
+        setWinnerClass(isWinner.winner);
         setIsWinner(null);
     }, [isWinner, setIsWinner, score, setScore]);
 
