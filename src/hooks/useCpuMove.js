@@ -75,10 +75,10 @@ export default function useCpuMove() {
     }
 
     const levels = {
-        impossible: 1,
-        hard: .75,
-        medium: .5,
         easy: -1,
+        medium: .5,
+        hard: .75,
+        impossible: 1
     }
 
     const probability = n => {
