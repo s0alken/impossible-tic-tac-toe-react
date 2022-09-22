@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import '../styles/Game.scss';
 import Header from './Header';
-import Board from './Board';
+//import Board from './Board';
 import Scoreboard from './Scoreboard';
 import { GameContext } from '../context/GameContext';
+import BoardCPU from './BoardCPU';
 
 export default function Game() {
 
@@ -25,7 +26,7 @@ export default function Game() {
                 setScore
             }}>
                 <Header />
-                <Board />
+                <BoardCPU />
                 <Scoreboard />
             </GameContext.Provider>
         </div>

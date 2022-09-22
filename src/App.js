@@ -9,23 +9,27 @@ function App() {
 
   const [gameType, setGameType] = useState(null);
   const [playerMark, setPlayerMark] = useState(null);
-
-  const difficulty = "medium";
+  const [difficulty, setDifficulty] = useState(null);
 
   return (
     <Main>
-      {playerMark && gameType ?
+      {playerMark && gameType && difficulty ?
         <GameConfigContext.Provider value={{
           gameType,
-          setPlayerMark,
           setGameType,
+          setPlayerMark,
+          setDifficulty,
+          difficulty,
           player1: playerMark,
           player2: playerMark === 'cross' ? 'circle' : 'cross',
-          difficulty: difficulty
         }}>
           <Game />
         </GameConfigContext.Provider> :
-        <Menu setGameType={setGameType} setPlayerMark={setPlayerMark} />}
+        <Menu
+          setGameType={setGameType}
+          setPlayerMark={setPlayerMark}
+          setDifficulty={setDifficulty}
+        />}
     </Main>
   );
 }

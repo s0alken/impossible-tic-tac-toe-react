@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import '../styles/Board.scss';
 import Cell from './Cell';
 import Popup from './Popup';
@@ -6,10 +6,10 @@ import PopupWinnerContent from './PopupWinnerContent';
 import checkWinner from '../utils/checkWinner';
 import { GameContext } from '../context/GameContext';
 import { GameConfigContext } from '../context/GameConfigContext';
+import useCpuMove from '../hooks/useCpuMove';
 import delay from '../utils/delay';
-import { io } from 'socket.io-client';
 
-export default function Board() {
+export default function BoardCPU() {
 
     const {
         turn,
@@ -22,47 +22,46 @@ export default function Board() {
         setScore
     } = useContext(GameContext);
 
-    const { player1, setPlayerMark, setGameType } = useContext(GameConfigContext);
+    const { player1, player2, setPlayerMark, setGameType, setDifficulty } = useContext(GameConfigContext);
 
     const [isPopupOpen, setIsPopupOpen] = useState(false);
     const [winnerClass, setWinnerClass] = useState(null);
     const [winnerRow, setWinnerRow] = useState([]);
 
-    const [socket, setSocket] = useState();
-
-    useEffect(() => {
-        const newSocket = io('http://localhost:5000/');
-        setSocket(newSocket);
-    }, [])
+    const { getMove } = useCpuMove();
 
     function handleOnClick(index) {
         if (isWinner || board[index] || turn !== player1) return;
         const newBoard = [...board];
         newBoard[index] = player1;
         const newTurn = turn === 'circle' ? 'cross' : 'circle';
-        socket.emit('send-message', { newBoard, newTurn });
+        setBoard(newBoard);
+        setTurn(newTurn);
     }
-
-    useEffect(() => {
-        if (socket == null) return;
-        
-        socket.on('board-update', ({ newBoard, newTurn }) => {
-            setBoard(newBoard);
-            setTurn(newTurn);
-        });
-
-        socket.on('reset', () => {
-           setNextGame();
-        });
-    });
 
     const setNextGame = () => {
         setIsWinner(null);
         setBoard(() => Array(9).fill(null));
+        
+        //cross always goes first...
         setTurn('cross');
         setIsPopupOpen(false);
         setWinnerRow([]);
     }
+
+    const makeCpuMove = useCallback(async () => {
+        if (isWinner) return;
+        const newBoard = [...board];
+        const cpuMove = getMove([...newBoard]);
+        newBoard[cpuMove] = player2;
+        await delay(700);
+        setBoard(newBoard);
+        setTurn(turn === 'circle' ? 'cross' : 'circle');
+    }, [board, setBoard, getMove, isWinner, player2, turn, setTurn]);
+
+    useEffect(() => {
+        if (!checkWinner(board) && turn === player2) makeCpuMove();
+    }, [makeCpuMove, player2, turn, board]);
 
     useEffect(() => {
         setIsWinner(checkWinner(board));
@@ -91,10 +90,11 @@ export default function Board() {
     const handleQuit = () => {
         setGameType(null);
         setPlayerMark(null);
+        setDifficulty(null)
     }
 
     const handleNextRound = () => {
-        socket.emit('reset');
+        setNextGame();
     }
 
     return (

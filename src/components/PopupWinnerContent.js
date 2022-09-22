@@ -26,12 +26,12 @@ export default function PopupWinnerContent({ winner, handleQuit, handleNextRound
     )
 
     return (
-        <>
+        <div className='popup__menu'>
             {winner === "tie" ? <TieContent /> : <WinnerContent />}
             <div className="popup__options">
                 <Button className="btn btn-md btn--silver" onClick={handleQuit}>Quit</Button>
                 <Button className="btn btn-md btn--yellow btn-next-round" onClick={handleNextRound}>Next round</Button>
             </div>
-        </>
+        </div>
     )
 }

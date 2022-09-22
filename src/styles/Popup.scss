@@ -21,7 +21,7 @@
 
     &__menu {
         flex: 1;
-        height: 26.6rem;
+        //height: 26.6rem;
         background-color: $semi-dark-navi;
 
         display: flex;
@@ -29,11 +29,23 @@
         justify-content: center;
         align-items: center;
 
-        //padding: 4.5rem;
+        padding: 4.5rem;
+
+        &-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+
+            max-width: 50rem;
+
+            &>*{
+                flex: 0 1 50rem;
+            }
+        }
 
         @media only screen and (max-width: $br-md) {
-            height: 22.8rem;
-            //padding: 2rem;
+            //height: 22.8rem;
+            padding: 2rem;
         }
     }
 
