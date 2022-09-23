@@ -22,7 +22,7 @@ export default function Board() {
         setScore
     } = useContext(GameContext);
 
-    const { player1, setPlayerMark, setGameType } = useContext(GameConfigContext);
+    const { playerMark, setPlayerMark, setGameType } = useContext(GameConfigContext);
 
     const [isPopupOpen, setIsPopupOpen] = useState(false);
     const [winnerClass, setWinnerClass] = useState(null);
@@ -36,9 +36,9 @@ export default function Board() {
     }, [])
 
     function handleOnClick(index) {
-        if (isWinner || board[index] || turn !== player1) return;
+        if (isWinner || board[index] || turn !== playerMark) return;
         const newBoard = [...board];
-        newBoard[index] = player1;
+        newBoard[index] = playerMark;
         const newTurn = turn === 'circle' ? 'cross' : 'circle';
         socket.emit('send-message', { newBoard, newTurn });
     }

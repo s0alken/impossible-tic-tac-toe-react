@@ -5,8 +5,11 @@ import '../styles/Scoreboard.scss';
 
 export default function Scoreboard() {
 
-    const {player1, player2} = useContext(GameConfigContext)
+    const {playerMark} = useContext(GameConfigContext)
     const {score} = useContext(GameContext);
+
+    const player1 = playerMark;
+    const player2 = playerMark === 'cross' ? 'circle' : 'cross';
 
     const labels = {
         cross: 'x',

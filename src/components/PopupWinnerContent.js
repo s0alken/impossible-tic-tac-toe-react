@@ -5,7 +5,8 @@ import icon_circle from '../assets/icon-o.svg';
 import icon_cross from '../assets/icon-x.svg';
 
 export default function PopupWinnerContent({ winner, handleQuit, handleNextRound }) {
-    const { player1 } = useContext(GameConfigContext);
+    const { playerMark } = useContext(GameConfigContext);
+    const player1 = playerMark;
 
     const WinnerContent = () => (
         <>
