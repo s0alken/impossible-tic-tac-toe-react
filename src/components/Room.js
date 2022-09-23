@@ -1,24 +1,17 @@
-import React from 'react';
-import { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import '../styles/Room.scss';
 import Game from './Game';
-import { io } from 'socket.io-client';
 import { GameConfigContext } from '../context/GameConfigContext';
+import { SocketContext } from '../context/SocketContext';
 
 export default function Room({roomId}) {
 
     const [oponentConnected, setOponentConnected] = useState(false);
-    const [socket, setSocket] = useState();
+    const {socket, userId} = useContext(SocketContext);
 
     const { playerMark, setPlayerMark } = useContext(GameConfigContext);
 
     useEffect(() => {
-        const newSocket = io('http://localhost:5000/');
-        setSocket(newSocket);
-    }, [])
-
-    useEffect(() => {
-        if (socket == null) return;
 
         if(roomId) {
             socket.emit('oponent-ready');
@@ -30,7 +23,6 @@ export default function Room({roomId}) {
         });
 
         socket.on('oponent-mark-ready', oponentMark => {
-            console.log("setiao", oponentMark);
             setPlayerMark(oponentMark);
             setOponentConnected(true);
         });
@@ -43,7 +35,7 @@ export default function Room({roomId}) {
 
     return (
         <div className='room'>
-            <h1 className='heading-lg popup__heading--tie'>Your Room ID is 123131</h1>
+            <h1 className='heading-lg popup__heading--tie'>{`Your Room ID is ${userId}`}</h1>
             <p className='heading-xs popup__heading--tie'>Waiting for your oponent...</p>
         </div>
     )

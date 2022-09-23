@@ -7,7 +7,7 @@ import checkWinner from '../utils/checkWinner';
 import { GameContext } from '../context/GameContext';
 import { GameConfigContext } from '../context/GameConfigContext';
 import delay from '../utils/delay';
-import { io } from 'socket.io-client';
+import { SocketContext } from '../context/SocketContext';
 
 export default function Board() {
 
@@ -28,12 +28,7 @@ export default function Board() {
     const [winnerClass, setWinnerClass] = useState(null);
     const [winnerRow, setWinnerRow] = useState([]);
 
-    const [socket, setSocket] = useState();
-
-    useEffect(() => {
-        const newSocket = io('http://localhost:5000/');
-        setSocket(newSocket);
-    }, [])
+    const {socket} = useContext(SocketContext);
 
     function handleOnClick(index) {
         if (isWinner || board[index] || turn !== playerMark) return;
@@ -44,25 +39,21 @@ export default function Board() {
     }
 
     useEffect(() => {
-        if (socket == null) return;
-        
+
         socket.on('board-update', ({ newBoard, newTurn }) => {
             setBoard(newBoard);
             setTurn(newTurn);
         });
 
         socket.on('reset', () => {
-           setNextGame();
+            setIsWinner(null);
+            setBoard(() => Array(9).fill(null));
+            setTurn('cross');
+            setIsPopupOpen(false);
+            setWinnerRow([]);
         });
-    });
 
-    const setNextGame = () => {
-        setIsWinner(null);
-        setBoard(() => Array(9).fill(null));
-        setTurn('cross');
-        setIsPopupOpen(false);
-        setWinnerRow([]);
-    }
+    }, [setBoard, setTurn, socket, setIsWinner]);
 
     useEffect(() => {
         setIsWinner(checkWinner(board));
@@ -99,7 +90,7 @@ export default function Board() {
 
     return (
         <>
-            <div className={`board ${turn}`}>
+            <div className={`board ${playerMark}`}>
                 {board.map((value, index) => {
                     let className = `cell ${value ? `cell--${value}` : ''}`;
                     className += winnerRow.includes(index) ? ' winner' : '';

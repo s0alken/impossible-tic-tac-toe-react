@@ -25,7 +25,6 @@ export default function Menu({ setGameType, setPlayerMark, setDifficulty, setRoo
     }
 
     const handleCPUSubmit = difficulty => {
-        console.log(selectedPlayerMark)
         setGameType('cpu');
         setPlayerMark(selectedPlayerMark);
         setDifficulty(difficulty);

@@ -5,6 +5,8 @@ import Main from "./components/Main";
 import Menu from "./components/Menu";
 import Room from "./components/Room";
 import { GameConfigContext } from "./context/GameConfigContext";
+import { SocketContext, socket } from "./context/SocketContext";
+import uniqid from 'uniqid';
 
 function App() {
 
@@ -33,16 +35,23 @@ function App() {
   }
 
   if (gameType === 'player') {
+    
+    //tienes dos opciones, o setear tu mismo el roomId o automatico,
+    //cuando se setea se invita al wn
+    const userId = uniqid();
+
     return (
       <Main>
-        <GameConfigContext.Provider value={{
-          gameType,
-          setGameType,
-          setPlayerMark,
-          playerMark
-        }}>
-          <Room roomId={roomId} />
-        </GameConfigContext.Provider>
+        <SocketContext.Provider value={{ socket, userId }}>
+          <GameConfigContext.Provider value={{
+            gameType,
+            setGameType,
+            setPlayerMark,
+            playerMark
+          }}>
+            <Room roomId={roomId} />
+          </GameConfigContext.Provider>
+        </SocketContext.Provider>
       </Main>
     );
   }
