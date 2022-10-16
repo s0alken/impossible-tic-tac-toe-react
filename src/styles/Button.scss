@@ -7,9 +7,11 @@
     text-transform: uppercase;
     transition: background-color .2s, transform .2s;
 
-    &:hover {
-        cursor: pointer;
-        transform: translateY(-.3rem);
+    @media not all and (hover: none) {
+        &:hover {
+            cursor: pointer;
+            transform: translateY(-.3rem);
+        }
     }
 
     &-lg {
@@ -82,12 +84,12 @@
             @media only screen and (max-width: $br-sm) {
                 border-radius: .5rem;
                 padding: 1.231rem;
-    
+
                 font-size: 1.4rem;
                 line-height: 1.8rem;
-    
+
                 letter-spacing: .0875rem;
-    
+
                 .btn__icon {
                     width: 1.538rem;
                     height: 1.538rem;
