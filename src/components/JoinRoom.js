@@ -4,14 +4,21 @@ import logo from '../assets/logo.svg';
 import { useSocket } from '../context/SocketProvider';
 import Game from './Game';
 import { GameConfigContext } from '../context/GameConfigContext';
+import Button from './Button';
 
 function JoinRoom({ roomId }) {
 
     const [opponentReady, setOpponentReady] = useState(false);
+    const [copyToClipboardBtnText, setCopyToClipboardBtnText] = useState("Click to copy room id")
 
     const { playerMark, setPlayerMark, setScoreLabels } = useContext(GameConfigContext);
 
     const socket = useSocket();
+
+    const copyToClipboard = () => {
+        navigator.clipboard.writeText(roomId);
+        setCopyToClipboardBtnText("Copied to clipboard!");
+    }
 
     useEffect(() => {
         if (socket == null) return;
@@ -46,6 +53,7 @@ function JoinRoom({ roomId }) {
                     <img src={logo} alt="Logo" />
                 </div>
                 <h1 className="join-room__heading heading-lg">Your room id is {roomId}</h1>
+                <Button className="btn btn-md btn--yellow" onClick={copyToClipboard}>{copyToClipboardBtnText}</Button>
                 <div className="join-room__heading-loader">
                     <h1 className="heading-sm">Waiting for opponent to connect</h1>
                     <div className="loader">
