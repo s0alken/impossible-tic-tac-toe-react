@@ -1,0 +1,44 @@
+@import './_variables.scss';
+
+.popup-difficulty {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    padding: 4.5rem 2rem;
+
+    @media only screen and (max-width: $br-md) {
+        padding: 4rem 2rem 4.8rem;
+    }
+
+    &__heading {
+        margin-bottom: 2.4rem;
+        text-align: center;
+
+        @media only screen and (max-width: $br-md) {
+            font-weight: 700;
+            font-size: 2.4rem;
+            line-height: 3rem;
+            letter-spacing: .15rem;
+        }
+
+        &--tie {
+            color: $silver;
+        }
+    }
+
+    &__options {
+        align-self: stretch;
+        display: flex;
+        justify-content: center;
+
+        &__container {
+            flex: 0 1 30rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+    }
+
+}

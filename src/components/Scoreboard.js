@@ -5,18 +5,28 @@ import '../styles/Scoreboard.scss';
 
 export default function Scoreboard() {
 
-    const {playerMark} = useContext(GameConfigContext)
-    const {score} = useContext(GameContext);
-
-    const player1 = playerMark;
-    const player2 = playerMark === 'cross' ? 'circle' : 'cross';
-
-    const labels = {
-        cross: 'x',
-        circle: 'o'
-    }
+    const { scoreLabels } = useContext(GameConfigContext);
+    const { score } = useContext(GameContext);
 
     return (
+        <div className="scoreboard">
+            <div className="scoreboard__score scoreboard__score--cross">
+                <span className="scoreboard__player">{`X (${scoreLabels.cross})`}</span>
+                <h2 className="scoreboard__total heading-md cross-total">{score.cross}</h2>
+            </div>
+            <div className="scoreboard__score scoreboard__score--tie">
+                <span className="scoreboard__player">Ties</span>
+                <h2 className="scoreboard__total heading-md ties-total">{score.tie}</h2>
+            </div>
+            <div className="scoreboard__score scoreboard__score--circle">
+                <span className="scoreboard__player">{`O (${scoreLabels.circle})`}</span>
+                <h2 className="scoreboard__total heading-md circle-total">{score.circle}</h2>
+            </div>
+        </div>
+    )
+
+
+    /* return (
         <div className="scoreboard">
             <div className={`scoreboard__score scoreboard__score--${player1}`}>
                 <span className="scoreboard__player">{`${labels[player1]} (You)`}</span>
@@ -31,5 +41,5 @@ export default function Scoreboard() {
                 <h2 className="scoreboard__total heading-md circle-total">{score[player2]}</h2>
             </div>
         </div>
-    )
+    ) */
 }

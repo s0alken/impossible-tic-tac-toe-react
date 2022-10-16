@@ -3,17 +3,17 @@ import React, { useState } from "react";
 import Game from "./components/Game";
 import Main from "./components/Main";
 import Menu from "./components/Menu";
-import Room from "./components/Room";
+import JoinRoom from "./components/JoinRoom";
 import { GameConfigContext } from "./context/GameConfigContext";
-import { SocketContext, socket } from "./context/SocketContext";
-import uniqid from 'uniqid';
+import { SocketProvider } from "./context/SocketProvider";
 
 function App() {
 
   const [gameType, setGameType] = useState(null);
   const [playerMark, setPlayerMark] = useState(null);
   const [difficulty, setDifficulty] = useState(null);
-  const [roomId, setRoomId] = useState('');
+  const [roomId, setRoomId] = useState(null);
+  const [scoreLabels, setScoreLabels] = useState({});
 
   if (gameType === 'cpu') {
     return (
@@ -21,12 +21,13 @@ function App() {
         <GameConfigContext.Provider value={{
           gameType,
           setGameType,
-          setPlayerMark,
-          setDifficulty,
-          difficulty,
           playerMark,
+          setPlayerMark,
+          difficulty,
+          setDifficulty,
           player1: playerMark,
           player2: playerMark === 'cross' ? 'circle' : 'cross',
+          scoreLabels
         }}>
           <Game />
         </GameConfigContext.Provider>
@@ -35,23 +36,21 @@ function App() {
   }
 
   if (gameType === 'player') {
-    
-    //tienes dos opciones, o setear tu mismo el roomId o automatico,
-    //cuando se setea se invita al wn
-    const userId = uniqid();
 
     return (
       <Main>
-        <SocketContext.Provider value={{ socket, userId }}>
+        <SocketProvider roomId={roomId}>
           <GameConfigContext.Provider value={{
             gameType,
             setGameType,
+            playerMark,
             setPlayerMark,
-            playerMark
+            scoreLabels,
+            setScoreLabels
           }}>
-            <Room roomId={roomId} />
+            <JoinRoom roomId={roomId} />
           </GameConfigContext.Provider>
-        </SocketContext.Provider>
+        </SocketProvider>
       </Main>
     );
   }
@@ -64,31 +63,12 @@ function App() {
         setDifficulty={setDifficulty}
         setRoomId={setRoomId}
         roomId={roomId}
+        scoreLabels={scoreLabels}
+        setScoreLabels={setScoreLabels}
       />
     </Main>
   )
 
-  /* return (
-    <Main>
-      {playerMark && gameType && difficulty ?
-        <GameConfigContext.Provider value={{
-          gameType,
-          setGameType,
-          setPlayerMark,
-          setDifficulty,
-          difficulty,
-          player1: playerMark,
-          player2: playerMark === 'cross' ? 'circle' : 'cross',
-        }}>
-          <Game />
-        </GameConfigContext.Provider> :
-        <Menu
-          setGameType={setGameType}
-          setPlayerMark={setPlayerMark}
-          setDifficulty={setDifficulty}
-        />}
-    </Main>
-  ); */
 }
 
 export default App;

@@ -1,0 +1,35 @@
+@import './_variables.scss';
+
+.popup-restart {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    padding: 6.7rem 2rem 6.6rem;
+
+    @media only screen and (max-width: $br-md) {
+        padding: 6.1rem 2rem 6.1rem;
+    }
+
+    &__heading {
+        margin-bottom: 3.1rem;
+        text-align: center;
+        color: $silver;
+
+        @media only screen and (max-width: $br-md) {
+            margin-bottom: 2.4rem;
+            font-weight: 700;
+            font-size: 2.4rem;
+            line-height: 3rem;
+            letter-spacing: .15rem;
+        }
+
+    }
+
+    &__options {
+        display: flex;
+        gap: 1.6rem;
+    }
+
+}

@@ -1,4 +1,4 @@
-@use './_variables.scss';
+@import './_variables.scss';
 
 .main {
     width: 100%;
@@ -6,4 +6,8 @@
 
     display: flex;
     justify-content: center;
+
+    *>:focus-visible {
+        outline: .4rem solid $light-yellow;
+    }
 }

@@ -1,15 +1,15 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import '../styles/Board.scss';
 import Cell from './Cell';
 import Popup from './Popup';
-import PopupWinnerContent from './PopupWinnerContent';
+import PopupResult from './PopupResult';
 import checkWinner from '../utils/checkWinner';
 import { GameContext } from '../context/GameContext';
 import { GameConfigContext } from '../context/GameConfigContext';
-import useCpuMove from '../hooks/useCpuMove';
 import delay from '../utils/delay';
+import { useSocket } from '../context/SocketProvider';
 
-export default function BoardCPU() {
+export default function BoardVsPlayer() {
 
     const {
         turn,
@@ -22,46 +22,39 @@ export default function BoardCPU() {
         setScore
     } = useContext(GameContext);
 
-    const { player1, player2, setPlayerMark, setGameType, setDifficulty } = useContext(GameConfigContext);
+    const { playerMark, setPlayerMark, setGameType } = useContext(GameConfigContext);
 
     const [isPopupOpen, setIsPopupOpen] = useState(false);
     const [winnerClass, setWinnerClass] = useState(null);
     const [winnerRow, setWinnerRow] = useState([]);
 
-    const { getMove } = useCpuMove();
+    const socket = useSocket();
 
     function handleOnClick(index) {
-        if (isWinner || board[index] || turn !== player1) return;
+        if (isWinner || board[index] || turn !== playerMark) return;
         const newBoard = [...board];
-        newBoard[index] = player1;
+        newBoard[index] = playerMark;
         const newTurn = turn === 'circle' ? 'cross' : 'circle';
-        setBoard(newBoard);
-        setTurn(newTurn);
+        socket.emit('board-update', { newBoard, newTurn });
     }
-
-    const setNextGame = () => {
-        setIsWinner(null);
-        setBoard(() => Array(9).fill(null));
-        
-        //cross always goes first...
-        setTurn('cross');
-        setIsPopupOpen(false);
-        setWinnerRow([]);
-    }
-
-    const makeCpuMove = useCallback(async () => {
-        if (isWinner) return;
-        const newBoard = [...board];
-        const cpuMove = getMove([...newBoard]);
-        newBoard[cpuMove] = player2;
-        await delay(700);
-        setBoard(newBoard);
-        setTurn(turn === 'circle' ? 'cross' : 'circle');
-    }, [board, setBoard, getMove, isWinner, player2, turn, setTurn]);
 
     useEffect(() => {
-        if (!checkWinner(board) && turn === player2) makeCpuMove();
-    }, [makeCpuMove, player2, turn, board]);
+        if(socket == null) return;
+
+        socket.on('board-update', ({ newBoard, newTurn }) => {
+            setBoard(newBoard);
+            setTurn(newTurn);
+        });
+
+        socket.on('board-reset', () => {
+            setIsWinner(null);
+            setBoard(() => Array(9).fill(null));
+            setTurn('cross');
+            setIsPopupOpen(false);
+            setWinnerRow([]);
+        });
+
+    }, [setBoard, setTurn, socket, setIsWinner]);
 
     useEffect(() => {
         setIsWinner(checkWinner(board));
@@ -90,16 +83,15 @@ export default function BoardCPU() {
     const handleQuit = () => {
         setGameType(null);
         setPlayerMark(null);
-        setDifficulty(null)
     }
 
     const handleNextRound = () => {
-        setNextGame();
+        socket.emit('board-reset');
     }
 
     return (
         <>
-            <div className={`board ${turn}`}>
+            <div className={`board ${playerMark}`}>
                 {board.map((value, index) => {
                     let className = `cell ${value ? `cell--${value}` : ''}`;
                     className += winnerRow.includes(index) ? ' winner' : '';
@@ -112,8 +104,8 @@ export default function BoardCPU() {
                     )
                 })}
             </div>
-            <Popup className={`popup ${isPopupOpen ? 'show' : ''}`}>
-                <PopupWinnerContent winner={winnerClass} handleQuit={handleQuit} handleNextRound={handleNextRound} />
+            <Popup show={isPopupOpen}>
+                <PopupResult winner={winnerClass} handleQuit={handleQuit} handleNextRound={handleNextRound} />
             </Popup>
         </>
     )

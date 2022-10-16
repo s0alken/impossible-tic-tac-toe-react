@@ -3,12 +3,16 @@ import Button from './Button';
 import '../styles/Menu.scss';
 import logo from '../assets/logo.svg';
 import Popup from './Popup';
+import PopupSelectDifficulty from './PopupSelectDifficulty';
+import uniqid from 'uniqid';
+import PopupJoinRoom from './PopupJoinRoom';
 
-export default function Menu({ setGameType, setPlayerMark, setDifficulty, setRoomId, roomId }) {
+export default function Menu({ setGameType, setPlayerMark, setDifficulty, setRoomId, scoreLabels, setScoreLabels }) {
     const [selectedPlayerMark, setSelectedPlayerMark] = useState('circle');
 
     const [isDifficultyPopupOpen, setIsDifficultyPopupOpen] = useState(false);
     const [isRoomPopupOpen, setIsRoomPopupOpen] = useState(false);
+    const [manualRoomId, setManualRoomId] = useState("");
 
     const isRadioSelected = value => selectedPlayerMark === value;
 
@@ -24,26 +28,38 @@ export default function Menu({ setGameType, setPlayerMark, setDifficulty, setRoo
         setIsRoomPopupOpen(true);
     }
 
-    const handleCPUSubmit = difficulty => {
+    const handleVsCPUSubmit = difficulty => {
         setGameType('cpu');
         setPlayerMark(selectedPlayerMark);
         setDifficulty(difficulty);
+
+        const newScoreLabels = {};
+        const opponentPlayerMark = selectedPlayerMark === 'cross' ? 'circle' : 'cross';
+
+        newScoreLabels[selectedPlayerMark] = 'you';
+        newScoreLabels[opponentPlayerMark] = 'cpu';
+
+        setScoreLabels(newScoreLabels);
     }
 
-    const handlePlayerSubmit = () => {
-        if(!roomId) return;
-
+    const handleVsPlayerSubmit = () => {
         setGameType('player');
         setPlayerMark(selectedPlayerMark);
+        setRoomId(manualRoomId);
     }
 
-    const createRoom = () => {
+    const createRoomId = () => {
         setGameType('player');
         setPlayerMark(selectedPlayerMark);
-    }
+        setRoomId(uniqid().toUpperCase());
 
-    const handleInputChange = event => {
-        setRoomId(event.target.value);
+        const newScoreLabels = {};
+        const opponentPlayerMark = selectedPlayerMark === 'cross' ? 'circle' : 'cross';
+
+        newScoreLabels[selectedPlayerMark] = 'p1';
+        newScoreLabels[opponentPlayerMark] = 'p2';
+
+        setScoreLabels(newScoreLabels);
     }
 
     return (
@@ -88,52 +104,21 @@ export default function Menu({ setGameType, setPlayerMark, setDifficulty, setRoo
                 </div>
 
                 <div className="menu__options">
-                    <Button
-                        className="btn btn-lg btn--yellow"
-                        onClick={openDifficultyPopup}
-                    >
-                        New Game (vs CPU)
-                    </Button>
-                    <Button
-                        className="btn btn-lg btn--cyan"
-                        onClick={openRoomPopup}
-                    >
-                        New Game (vs player)
-                    </Button>
+                    <Button className="btn btn-lg btn--yellow" onClick={openDifficultyPopup}>New Game (vs CPU)</Button>
+                    <Button className="btn btn-lg btn--cyan" onClick={openRoomPopup}>New Game (vs player)</Button>
                 </div>
             </form>
-            <Popup className={`popup ${isDifficultyPopupOpen ? 'show' : ''}`}>
-                <div className="popup__menu">
-                    <p className="popup__heading heading-md popup__heading--tie">
-                        Select a difficulty level
-                    </p>
-                    <div className='popup__menu-container'>
-                        <Button className="btn btn-lg btn--silver" onClick={() => handleCPUSubmit('easy')}>Easy</Button>
-                        <Button className="btn btn-lg btn--silver" onClick={() => handleCPUSubmit('medium')}>Medium</Button>
-                        <Button className="btn btn-lg btn--silver" onClick={() => handleCPUSubmit('hard')}>Hard</Button>
-                        <Button className="btn btn-lg btn--silver" onClick={() => handleCPUSubmit('impossible')}>Impossible</Button>
-                    </div>
-                </div>
+
+            <Popup show={isDifficultyPopupOpen}>
+                <PopupSelectDifficulty handleVsCPUSubmit={handleVsCPUSubmit} />
             </Popup>
-            <Popup className={`popup ${isRoomPopupOpen ? 'show' : ''}`}>
-                <div className='popup__menu'>
-                    <Button className="btn btn-lg btn--silver" onClick={() => createRoom()}>Create a Room</Button>
-                    <p className="popup__heading heading-sm popup__heading--tie" style={{ marginTop: '30px' }}>
-                        Or enter a Room ID
-                    </p>
-                    <input
-                        type="text"
-                        onChange={handleInputChange}
-                        value={roomId}
-                    />
-                    <Button
-                        className="btn btn-lg btn--yellow"
-                        style={{ marginTop: '30px' }}
-                        onClick={handlePlayerSubmit}
-                    >
-                        Enter
-                    </Button>
-                </div>
+
+            <Popup show={isRoomPopupOpen}>
+                <PopupJoinRoom
+                    createRoomId={createRoomId}
+                    setManualRoomId={setManualRoomId}
+                    handleVsPlayerSubmit={handleVsPlayerSubmit}
+                />
             </Popup>
         </>
 

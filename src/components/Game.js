@@ -1,10 +1,10 @@
 import React, { useState, useContext } from 'react';
 import '../styles/Game.scss';
 import Header from './Header';
-import Board from './Board';
+import BoardVsCPU from './BoardVsCPU';
+import BoardVsPlayer from './BoardVsPlayer';
 import Scoreboard from './Scoreboard';
 import { GameContext } from '../context/GameContext';
-import BoardCPU from './BoardCPU';
 import { GameConfigContext } from '../context/GameConfigContext';
 
 export default function Game() {
@@ -29,7 +29,7 @@ export default function Game() {
                 setScore
             }}>
                 <Header />
-                {gameType === 'cpu' ? <BoardCPU /> : <Board />}
+                {gameType === 'cpu' ? <BoardVsCPU /> : <BoardVsPlayer />}
                 <Scoreboard />
             </GameContext.Provider>
         </div>

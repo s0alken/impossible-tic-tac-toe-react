@@ -4,7 +4,7 @@ import logo from '../assets/logo.svg';
 import icon_restart from '../assets/icon-restart.svg';
 import Button from './Button';
 import Popup from './Popup';
-import PopupRestartContent from './PopupRestartContent';
+import PopupRestart from './PopupRestart';
 import { GameContext } from '../context/GameContext';
 
 export default function Header() {
@@ -24,8 +24,8 @@ export default function Header() {
                     </Button>
                 </div>
             </div>
-            <Popup className={`popup ${isPopupOpen ? 'show' : ''}`}>
-                <PopupRestartContent setIsPopupOpen={setIsPopupOpen} />
+            <Popup show={isPopupOpen}>
+                <PopupRestart setIsPopupOpen={setIsPopupOpen} />
             </Popup>
         </>
     )
