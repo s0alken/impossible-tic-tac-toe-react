@@ -2,16 +2,34 @@
 
 .board {
 
-    &.cross .cell:not(.cell--cross):not(.cell--circle):hover,
-    &.cross .cell:not(.cell--cross):not(.cell--circle):focus {
-        background: $semi-dark-navi url(../assets/icon-x-outline.svg) no-repeat center;
-        background-size: 45.71%;
+    &.my-turn .cell:not(.cell--cross):not(.cell--circle):hover {
+        cursor: pointer;
     }
 
-    &.circle .cell:not(.cell--cross):not(.cell--circle):hover,
-    &.circle .cell:not(.cell--cross):not(.cell--circle):focus {
-        background: $semi-dark-navi url(../assets/icon-o-outline.svg) no-repeat center;
+    &.my-turn.cross .cell:not(.cell--cross):not(.cell--circle)::after {
+        background: url(../assets/icon-x-outline.svg) no-repeat center;
+    }
+
+    &.my-turn.circle .cell:not(.cell--cross):not(.cell--circle)::after {
+        background: url(../assets/icon-o-outline.svg) no-repeat center;
+    }
+
+    &.my-turn.cross .cell:not(.cell--cross):not(.cell--circle)::after,
+    &.my-turn.circle .cell:not(.cell--cross):not(.cell--circle)::after {
+        content: "";
+        width: 100%;
+        height: 100%;
+        background-size: 20.71%;
+        transition: all .1s ease-out;
+        opacity: 0;
+    }
+
+    &.my-turn.cross .cell:not(.cell--cross):not(.cell--circle):hover::after,
+    &.my-turn.cross .cell:not(.cell--cross):not(.cell--circle):focus::after,
+    &.my-turn.circle .cell:not(.cell--cross):not(.cell--circle):hover::after,
+    &.my-turn.circle .cell:not(.cell--cross):not(.cell--circle):focus::after {
         background-size: 45.71%;
+        opacity: 1;
     }
 
 }

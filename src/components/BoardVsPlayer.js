@@ -63,16 +63,20 @@ export default function BoardVsPlayer() {
     const setFinishedGame = async () => {
         if (!isWinner) return;
 
+        const {winner, winnerRow} = isWinner;
+
         await delay(500);
-        setWinnerRow(isWinner.winnerRow);
-        setWinnerClass(isWinner.winner);
+        setWinnerRow(winnerRow);
+        setWinnerClass(winner);
 
         const newScore = { ...score };
-        newScore[isWinner.winner] += 1;
+        newScore[winner] += 1;
         setScore(newScore);
 
         setIsWinner(null);
-        await delay(1000);
+
+        await delay(winner === 'tie' ? 100 : 1000);
+
         setIsPopupOpen(true);
     }
 
@@ -91,7 +95,7 @@ export default function BoardVsPlayer() {
 
     return (
         <>
-            <div className={`board ${playerMark}`}>
+            <div className={`board ${playerMark} ${playerMark === turn ? 'my-turn' : ''}`}>
                 {board.map((value, index) => {
                     let className = `cell ${value ? `cell--${value}` : ''}`;
                     className += winnerRow.includes(index) ? ' winner' : '';

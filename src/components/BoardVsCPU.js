@@ -30,7 +30,7 @@ export default function BoardVsCPU() {
 
     const { getMove } = useCpuMove();
 
-    function handleOnClick(index) {
+    const handleOnClick = index => {
         if (isWinner || board[index] || turn !== player1) return;
         const newBoard = [...board];
         newBoard[index] = player1;
@@ -42,8 +42,6 @@ export default function BoardVsCPU() {
     const setNextGame = () => {
         setIsWinner(null);
         setBoard(() => Array(9).fill(null));
-
-        //cross always goes first...
         setTurn('cross');
         setIsPopupOpen(false);
         setWinnerRow([]);
@@ -70,16 +68,20 @@ export default function BoardVsCPU() {
     const setFinishedGame = async () => {
         if (!isWinner) return;
 
+        const {winner, winnerRow} = isWinner;
+
         await delay(500);
-        setWinnerRow(isWinner.winnerRow);
-        setWinnerClass(isWinner.winner);
+        setWinnerRow(winnerRow);
+        setWinnerClass(winner);
 
         const newScore = { ...score };
-        newScore[isWinner.winner] += 1;
+        newScore[winner] += 1;
         setScore(newScore);
 
         setIsWinner(null);
-        await delay(1000);
+
+        await delay(winner === 'tie' ? 100 : 1000);
+
         setIsPopupOpen(true);
     }
 
@@ -99,7 +101,7 @@ export default function BoardVsCPU() {
 
     return (
         <>
-            <div className={`board ${turn}`}>
+            <div className={`board ${player1} ${player1 === turn ? 'my-turn' : ''}`}>
                 {board.map((value, index) => {
                     let className = `cell ${value ? `cell--${value}` : ''}`;
                     className += winnerRow.includes(index) ? ' winner' : '';

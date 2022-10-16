@@ -109,7 +109,7 @@ export default function Menu({ setGameType, setPlayerMark, setDifficulty, setRoo
                 </div>
             </form>
 
-            <Popup show={isDifficultyPopupOpen}>
+            <Popup show={isDifficultyPopupOpen} onClick={() => setIsDifficultyPopupOpen(false)}>
                 <PopupSelectDifficulty handleVsCPUSubmit={handleVsCPUSubmit} />
             </Popup>
 

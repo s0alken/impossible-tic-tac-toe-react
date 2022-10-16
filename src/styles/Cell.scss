@@ -16,10 +16,6 @@
 
     transition: background-color .3s;
 
-    &:hover {
-        cursor: pointer;
-    }
-
     &--cross {
         background: $semi-dark-navi url(../assets/icon-x.svg) no-repeat center;
         background-size: 45.71%;
@@ -64,7 +60,4 @@
         }
     }
 
-    &.played:hover {
-        cursor: not-allowed;
-    }
 }
