@@ -1,7 +1,8 @@
 import React from 'react';
 import '../styles/PopupSelectDifficulty.scss';
 
-function PopupSelectDifficulty({handleVsCPUSubmit}) {
+function PopupSelectDifficulty({ handleVsCPUSubmit }) {
+
     return (
         <div className="popup-difficulty">
             <h1 className="popup-difficulty__heading heading-lg popup-difficulty__heading--tie backInLeft delay-3">

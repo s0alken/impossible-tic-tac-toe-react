@@ -3,6 +3,7 @@ import '../styles/PopupJoinRoom.scss';
 import Button from './Button';
 
 function PopupJoinRoom({ createRoomId, setManualRoomId, handleVsPlayerSubmit }) {
+    
     return (
         <div className="popup-join">
             <button className="btn btn-lg btn--silver backInLeft delay-3" onClick={createRoomId}>Create a room</button>

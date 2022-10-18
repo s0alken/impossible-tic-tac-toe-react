@@ -27,7 +27,7 @@ function PopupResult({ winner, handleQuit, handleNextRound }) {
     )
 
     const TieContent = () => (
-        <h1 className="popup-result__heading heading-lg popup-result__heading--tie backInLeft delay-5">
+        <h1 className="popup-result__heading heading-lg popup-result__heading--tie backInLeft delay-3">
             Round tied
         </h1>
     )
@@ -35,7 +35,7 @@ function PopupResult({ winner, handleQuit, handleNextRound }) {
     return (
         <div className="popup-result">
             {winner === "tie" ? <TieContent /> : <WinnerContent />}
-            <div className="popup-result__options backInLeft delay-7">
+            <div className={`popup-result__options backInLeft delay-${winner === "tie" ? '5' : '7'}`}>
                 <Button className="btn btn-md btn--silver" onClick={handleQuit}>Quit</Button>
                 <Button className="btn btn-md btn--yellow btn-next-round" onClick={handleNextRound}>Next round</Button>
             </div>

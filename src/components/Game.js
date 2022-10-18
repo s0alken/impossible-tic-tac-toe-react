@@ -58,7 +58,7 @@ export default function Game() {
                 {gameType === 'cpu' ? <BoardVsCPU /> : <BoardVsPlayer />}
                 <Scoreboard />
             </div>
-            <Popup show={isPopupRestartOpen}>
+            <Popup show={isPopupRestartOpen} setIsPopupOpen={setIsPopupRestartOpen} closable>
                 <PopupRestart setIsPopupRestartOpen={setIsPopupRestartOpen} />
             </Popup>
         </GameContext.Provider >

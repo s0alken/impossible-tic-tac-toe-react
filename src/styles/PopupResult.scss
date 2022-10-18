@@ -6,10 +6,11 @@
     justify-content: center;
     align-items: center;
 
-    padding: 4.5rem 2rem;
+    padding-inline: 2rem;
+    height: 26.6rem;
 
-    @media only screen and (max-width: $br-md) {
-        padding: 4rem 2rem 4.8rem;
+    @media only screen and (max-width: $br-sm) {
+        height: 22.8rem;
     }
 
     &__text {

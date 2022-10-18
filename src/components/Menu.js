@@ -10,7 +10,7 @@ import PopupJoinRoom from './PopupJoinRoom';
 export default function Menu({ setGameType, setPlayerMark, setDifficulty, setRoomId, scoreLabels, setScoreLabels }) {
 
     const [selectedPlayerMark, setSelectedPlayerMark] = useState('circle');
-    const [isPopupSelectDifficulty, setIsPopupSelectDifficulty] = useState(false);
+    const [isPopupSelectDifficultyOpen, setIsPopupSelectDifficultyOpen] = useState(false);
     const [isPopupJoinRoomOpen, setIsPopupJoinRoomOpen] = useState(false);
     const [manualRoomId, setManualRoomId] = useState("");
 
@@ -19,7 +19,7 @@ export default function Menu({ setGameType, setPlayerMark, setDifficulty, setRoo
     const openDifficultyPopup = event => {
         event.preventDefault();
 
-        setIsPopupSelectDifficulty(true);
+        setIsPopupSelectDifficultyOpen(true);
     }
 
     const openRoomPopup = event => {
@@ -43,6 +43,7 @@ export default function Menu({ setGameType, setPlayerMark, setDifficulty, setRoo
     }
 
     const handleVsPlayerSubmit = () => {
+        if(!manualRoomId) return;
         setGameType('player');
         setPlayerMark(selectedPlayerMark);
         setRoomId(manualRoomId);
@@ -109,11 +110,13 @@ export default function Menu({ setGameType, setPlayerMark, setDifficulty, setRoo
                 </div>
             </form>
 
-            <Popup show={isPopupSelectDifficulty}>
-                <PopupSelectDifficulty handleVsCPUSubmit={handleVsCPUSubmit} />
+            <Popup show={isPopupSelectDifficultyOpen} setIsPopupOpen={setIsPopupSelectDifficultyOpen} closable>
+                <PopupSelectDifficulty
+                    handleVsCPUSubmit={handleVsCPUSubmit}
+                />
             </Popup>
 
-            <Popup show={isPopupJoinRoomOpen}>
+            <Popup show={isPopupJoinRoomOpen} setIsPopupOpen={setIsPopupJoinRoomOpen} closable>
                 <PopupJoinRoom
                     createRoomId={createRoomId}
                     setManualRoomId={setManualRoomId}
