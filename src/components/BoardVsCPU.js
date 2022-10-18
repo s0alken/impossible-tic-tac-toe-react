@@ -28,7 +28,7 @@ export default function BoardVsCPU() {
     const [winnerClass, setWinnerClass] = useState(null);
     const [winnerRow, setWinnerRow] = useState([]);
 
-    const { getMove } = useCpuMove();
+    const getMove = useCpuMove();
 
     const handleOnClick = index => {
         if (isWinner || board[index] || turn !== player1) return;
@@ -37,14 +37,6 @@ export default function BoardVsCPU() {
         const newTurn = turn === 'circle' ? 'cross' : 'circle';
         setBoard(newBoard);
         setTurn(newTurn);
-    }
-
-    const setNextGame = () => {
-        setIsWinner(null);
-        setBoard(() => Array(9).fill(null));
-        setTurn('cross');
-        setIsPopupOpen(false);
-        setWinnerRow([]);
     }
 
     const makeCpuMove = useCallback(async () => {
@@ -68,7 +60,7 @@ export default function BoardVsCPU() {
     const setFinishedGame = async () => {
         if (!isWinner) return;
 
-        const {winner, winnerRow} = isWinner;
+        const { winner, winnerRow } = isWinner;
 
         await delay(500);
         setWinnerRow(winnerRow);
@@ -96,7 +88,11 @@ export default function BoardVsCPU() {
     }
 
     const handleNextRound = () => {
-        setNextGame();
+        setIsWinner(null);
+        setBoard(() => Array(9).fill(null));
+        setTurn('cross');
+        setIsPopupOpen(false);
+        setWinnerRow([]);
     }
 
     return (

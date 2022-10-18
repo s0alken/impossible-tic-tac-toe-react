@@ -48,7 +48,7 @@ function JoinRoom({ roomId }) {
 
     if (!opponentReady) {
         return (
-            <div className="join-room">
+            <div className="join-room fadeInUp">
                 <div className="join-room__logo">
                     <img src={logo} alt="Logo" />
                 </div>

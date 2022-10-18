@@ -1,0 +1,76 @@
+.fadeInUp {
+    animation: fadeInUp .5s ease-in-out;
+    animation-fill-mode: backwards;
+}
+
+.backInLeft {
+    animation: backInLeft .5s ease-in-out;
+    animation-fill-mode: backwards;
+}
+
+.fillInLeft {
+    animation: fillInLeft .5s ease-in-out;
+    animation-fill-mode: backwards;
+}
+
+.delay-3 {
+    animation-delay: .3s;
+}
+
+.delay-4 {
+    animation-delay: .4s;
+}
+
+.delay-5 {
+    animation-delay: .5s;
+}
+
+.delay-6 {
+    animation-delay: .6s;
+}
+
+.delay-7 {
+    animation-delay: .7s;
+}
+
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(2rem);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes backInLeft {
+    0% {
+        opacity: 0;
+        transform: translateX(-60rem);
+    }
+
+    50% {
+        transform: translateX(10rem);
+    }
+
+    80% {
+        transform: translateX(-2rem);
+    }
+
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fillInLeft {
+    0% {
+        transform: translateX(-100%);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}

@@ -5,7 +5,7 @@ export default function Popup({ show, children, ...props }) {
 
     return (
         <div className={`popup ${show ? 'show' : ''}`} {...props}>
-            <div className="popup__content">
+            <div className="popup__content fillInLeft">
                 {children}
             </div>
         </div>

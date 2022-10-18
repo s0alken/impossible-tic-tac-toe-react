@@ -1,31 +1,24 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import '../styles/PopupRestart.scss';
-import { GameContext } from '../context/GameContext';
 import Button from './Button';
+import { GameContext } from '../context/GameContext';
+import { useContext } from 'react';
 
-function PopupRestart({ setIsPopupOpen }) {
+function PopupRestart({ setIsPopupRestartOpen }) {
 
-    const { setBoard, setIsWinner, setTurn, setScore } = useContext(GameContext);
-
-    const restart = () => {
-        setIsWinner(null);
-        setBoard(() => Array(9).fill(null));
-        setTurn('cross');
-        setIsPopupOpen(false);
-        setScore({ cross: 0, tie: 0, circle: 0 })
-    }
+    const { restartGame } = useContext(GameContext);
 
     return (
         <div className="popup-restart">
-            <h1 className="popup-restart__heading heading-lg popup-result__heading--tie">
+            <h1 className="popup-restart__heading heading-lg popup-result__heading--tie backInLeft delay-3">
                 Restart game?
             </h1>
-            <div className="popup-restart__options">
-                <Button className="btn btn-md btn--silver" onClick={() => setIsPopupOpen(false)}>No, cancel</Button>
-                <Button className="btn btn-md btn--yellow btn-next-round" onClick={restart}>Yes, restart</Button>
+            <div className="popup-restart__options backInLeft delay-5">
+                <Button className="btn btn-md btn--silver" onClick={() => setIsPopupRestartOpen(false)}>No, cancel</Button>
+                <Button className="btn btn-md btn--yellow btn-next-round" onClick={restartGame}>Yes, restart</Button>
             </div>
         </div >
     )
 }
 
-export default PopupRestart
+export default PopupRestart;

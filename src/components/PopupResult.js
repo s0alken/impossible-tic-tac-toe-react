@@ -16,10 +16,10 @@ function PopupResult({ winner, handleQuit, handleNextRound }) {
 
     const WinnerContent = () => (
         <>
-            <p className="popup-result__text heading-xs">
+            <p className="popup-result__text heading-xs backInLeft delay-3">
                 {labels[gameType]}
             </p>
-            <h1 className={`popup-result__heading heading-lg popup-result__heading--${winner}`}>
+            <h1 className={`popup-result__heading heading-lg popup-result__heading--${winner} backInLeft delay-5`}>
                 <img src={winner === 'circle' ? icon_circle : icon_cross} alt={`${winner} logo`} className="popup-result__heading-icon" />
                 Takes the round
             </h1>
@@ -27,7 +27,7 @@ function PopupResult({ winner, handleQuit, handleNextRound }) {
     )
 
     const TieContent = () => (
-        <h1 className="popup-result__heading heading-lg popup-result__heading--tie">
+        <h1 className="popup-result__heading heading-lg popup-result__heading--tie backInLeft delay-5">
             Round tied
         </h1>
     )
@@ -35,7 +35,7 @@ function PopupResult({ winner, handleQuit, handleNextRound }) {
     return (
         <div className="popup-result">
             {winner === "tie" ? <TieContent /> : <WinnerContent />}
-            <div className="popup-result__options">
+            <div className="popup-result__options backInLeft delay-7">
                 <Button className="btn btn-md btn--silver" onClick={handleQuit}>Quit</Button>
                 <Button className="btn btn-md btn--yellow btn-next-round" onClick={handleNextRound}>Next round</Button>
             </div>

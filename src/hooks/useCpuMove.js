@@ -95,5 +95,5 @@ export default function useCpuMove() {
         return move;
     }
 
-    return { getMove };
+    return getMove;
 }

@@ -19,7 +19,8 @@ export default function BoardVsPlayer() {
         isWinner,
         setIsWinner,
         score,
-        setScore
+        setScore,
+        handleRestartGame
     } = useContext(GameContext);
 
     const { playerMark, setPlayerMark, setGameType } = useContext(GameConfigContext);
@@ -30,7 +31,7 @@ export default function BoardVsPlayer() {
 
     const socket = useSocket();
 
-    function handleOnClick(index) {
+    const handleOnClick = index => {
         if (isWinner || board[index] || turn !== playerMark) return;
         const newBoard = [...board];
         newBoard[index] = playerMark;
@@ -39,14 +40,14 @@ export default function BoardVsPlayer() {
     }
 
     useEffect(() => {
-        if(socket == null) return;
+        //if (socket == null) return;
 
         socket.on('board-update', ({ newBoard, newTurn }) => {
             setBoard(newBoard);
             setTurn(newTurn);
         });
 
-        socket.on('board-reset', () => {
+        socket.on('next-round', () => {
             setIsWinner(null);
             setBoard(() => Array(9).fill(null));
             setTurn('cross');
@@ -54,7 +55,11 @@ export default function BoardVsPlayer() {
             setWinnerRow([]);
         });
 
-    }, [setBoard, setTurn, socket, setIsWinner]);
+        socket.on('game-restart', () => {
+            handleRestartGame();
+        });
+
+    }, [setBoard, setTurn, socket, setIsWinner, setScore, handleRestartGame]);
 
     useEffect(() => {
         setIsWinner(checkWinner(board));
@@ -63,7 +68,7 @@ export default function BoardVsPlayer() {
     const setFinishedGame = async () => {
         if (!isWinner) return;
 
-        const {winner, winnerRow} = isWinner;
+        const { winner, winnerRow } = isWinner;
 
         await delay(500);
         setWinnerRow(winnerRow);
@@ -90,7 +95,7 @@ export default function BoardVsPlayer() {
     }
 
     const handleNextRound = () => {
-        socket.emit('board-reset');
+        socket.emit('next-round');
     }
 
     return (

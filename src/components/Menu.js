@@ -8,10 +8,10 @@ import uniqid from 'uniqid';
 import PopupJoinRoom from './PopupJoinRoom';
 
 export default function Menu({ setGameType, setPlayerMark, setDifficulty, setRoomId, scoreLabels, setScoreLabels }) {
-    const [selectedPlayerMark, setSelectedPlayerMark] = useState('circle');
 
-    const [isDifficultyPopupOpen, setIsDifficultyPopupOpen] = useState(false);
-    const [isRoomPopupOpen, setIsRoomPopupOpen] = useState(false);
+    const [selectedPlayerMark, setSelectedPlayerMark] = useState('circle');
+    const [isPopupSelectDifficulty, setIsPopupSelectDifficulty] = useState(false);
+    const [isPopupJoinRoomOpen, setIsPopupJoinRoomOpen] = useState(false);
     const [manualRoomId, setManualRoomId] = useState("");
 
     const isRadioSelected = value => selectedPlayerMark === value;
@@ -19,13 +19,13 @@ export default function Menu({ setGameType, setPlayerMark, setDifficulty, setRoo
     const openDifficultyPopup = event => {
         event.preventDefault();
 
-        setIsDifficultyPopupOpen(true);
+        setIsPopupSelectDifficulty(true);
     }
 
     const openRoomPopup = event => {
         event.preventDefault();
 
-        setIsRoomPopupOpen(true);
+        setIsPopupJoinRoomOpen(true);
     }
 
     const handleVsCPUSubmit = difficulty => {
@@ -64,7 +64,7 @@ export default function Menu({ setGameType, setPlayerMark, setDifficulty, setRoo
 
     return (
         <>
-            <form className="menu">
+            <form className="menu fadeInUp">
                 <div className="menu__logo">
                     <img src={logo} alt="Logo" />
                 </div>
@@ -109,11 +109,11 @@ export default function Menu({ setGameType, setPlayerMark, setDifficulty, setRoo
                 </div>
             </form>
 
-            <Popup show={isDifficultyPopupOpen} onClick={() => setIsDifficultyPopupOpen(false)}>
+            <Popup show={isPopupSelectDifficulty}>
                 <PopupSelectDifficulty handleVsCPUSubmit={handleVsCPUSubmit} />
             </Popup>
 
-            <Popup show={isRoomPopupOpen}>
+            <Popup show={isPopupJoinRoomOpen}>
                 <PopupJoinRoom
                     createRoomId={createRoomId}
                     setManualRoomId={setManualRoomId}
