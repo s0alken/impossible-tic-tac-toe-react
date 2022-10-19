@@ -52,7 +52,7 @@ export default function Menu({ setGameType, setPlayerMark, setDifficulty, setRoo
     const createRoomId = () => {
         setGameType('player');
         setPlayerMark(selectedPlayerMark);
-        setRoomId(uniqid().toUpperCase());
+        setRoomId(uniqid());
 
         const newScoreLabels = {};
         const opponentPlayerMark = selectedPlayerMark === 'cross' ? 'circle' : 'cross';

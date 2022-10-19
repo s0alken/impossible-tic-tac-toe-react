@@ -1,6 +1,8 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import io from 'socket.io-client';
 
+const URL = process.env.SOCKET_URL || 'http://localhost:3000/';
+
 const SocketContext = createContext();
 
 export function useSocket() {
@@ -11,7 +13,7 @@ export function SocketProvider({ roomId, children }) {
     const [socket, setSocket] = useState();
 
     useEffect(() => {
-        const newSocket = io('https://obscure-chamber-13153.herokuapp.com/', {
+        const newSocket = io(URL, {
             query: {
                 roomId
             }
