@@ -11,7 +11,7 @@ export function SocketProvider({ roomId, children }) {
     const [socket, setSocket] = useState();
 
     useEffect(() => {
-        const newSocket = io('http://localhost:5000/', {
+        const newSocket = io('https://obscure-chamber-13153.herokuapp.com/', {
             query: {
                 roomId
             }
