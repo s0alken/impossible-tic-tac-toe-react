@@ -16,7 +16,7 @@ function JoinRoom({ roomId }) {
     const socket = useSocket();
 
     const copyToClipboard = () => {
-        navigator.clipboard.writeText(roomId);
+        navigator.clipboard.writeText(roomId.toUpperCase());
         setCopyToClipboardBtnText("Copied to clipboard!");
     }
 
