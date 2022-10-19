@@ -80,6 +80,7 @@ export default function Menu({ setGameType, setPlayerMark, setDifficulty, setRoo
                                 id="radio-cross"
                                 name="player_mark"
                                 value="cross"
+                                aria-label="cross"
                                 checked={isRadioSelected('cross')}
                                 onChange={e => setSelectedPlayerMark(e.target.value)}
                             />
@@ -92,6 +93,7 @@ export default function Menu({ setGameType, setPlayerMark, setDifficulty, setRoo
                                 id="radio-circle"
                                 name="player_mark"
                                 value="circle"
+                                aria-label="circle"
                                 checked={isRadioSelected('circle')}
                                 onChange={e => setSelectedPlayerMark(e.target.value)}
                             />
