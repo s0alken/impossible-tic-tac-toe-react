@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, useRef } from 'react';
 import '../styles/Board.scss';
 import Cell from './Cell';
 import Popup from './Popup';
@@ -10,6 +10,8 @@ import delay from '../utils/delay';
 import { useSocket } from '../context/SocketProvider';
 
 export default function BoardVsPlayer() {
+
+    const boardRef = useRef();
 
     const {
         turn,
@@ -27,7 +29,6 @@ export default function BoardVsPlayer() {
 
     const [isPopupResultOpen, setIsPopupResultOpen] = useState(false);
     const [winnerClass, setWinnerClass] = useState(null);
-    const [winnerRow, setWinnerRow] = useState([]);
 
     const socket = useSocket();
 
@@ -52,7 +53,6 @@ export default function BoardVsPlayer() {
             setBoard(Array(9).fill(null));
             setTurn('cross');
             setIsPopupResultOpen(false);
-            setWinnerRow([]);
         });
 
         socket.on('game-restart', () => {
@@ -68,19 +68,24 @@ export default function BoardVsPlayer() {
         const setFinishedGame = async () => {
             const { winner, winnerRow } = isWinner;
 
-            await delay(500);
-            setWinnerRow(winnerRow);
-            setWinnerClass(winner);
+            const cells = boardRef.current.querySelectorAll('.cell');
+
+            const winnerCells = [cells[winnerRow[0]], cells[winnerRow[1]], cells[winnerRow[2]]];
+
+            for (let i = 0; i < winnerCells.length; i++) {
+                await delay(400); 
+                winnerCells[i].classList.add("winner");
+            }
+
+            await delay(winner === 'tie' ? 100 : 800);
 
             const newScore = { ...score };
             newScore[winner] += 1;
+
             setScore(newScore);
-
-            setIsWinner(null);
-
-            await delay(winner === 'tie' ? 100 : 1000);
-
+            setWinnerClass(winner); 
             setIsPopupResultOpen(true);
+            setIsWinner(null);
         };
 
         setFinishedGame();
@@ -100,13 +105,11 @@ export default function BoardVsPlayer() {
         <>
             <div className={`board ${playerMark} ${playerMark === turn ? 'my-turn' : ''}`}>
                 {board.map((value, index) => {
-                    let className = `cell ${value ? `cell--${value}` : ''}`;
-                    className += winnerRow.includes(index) ? ' winner' : '';
                     return (
                         <Cell
                             key={index}
                             onClick={() => handleOnClick(index)}
-                            className={className}
+                            className={`cell ${value ? `cell--${value}` : ''}`}
                         />
                     )
                 })}

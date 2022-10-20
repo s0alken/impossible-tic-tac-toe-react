@@ -11,8 +11,6 @@ export function useSocket() {
 }
 
 export function SocketProvider({ roomId, children }) {
-
-    console.log(URL)
     
     const [socket, setSocket] = useState();
 
