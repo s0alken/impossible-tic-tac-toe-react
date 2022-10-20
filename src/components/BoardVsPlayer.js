@@ -25,7 +25,7 @@ export default function BoardVsPlayer() {
 
     const { playerMark, setPlayerMark, setGameType } = useContext(GameConfigContext);
 
-    const [isPopupOpen, setIsPopupOpen] = useState(false);
+    const [isPopupResultOpen, setIsPopupResultOpen] = useState(false);
     const [winnerClass, setWinnerClass] = useState(null);
     const [winnerRow, setWinnerRow] = useState([]);
 
@@ -40,18 +40,18 @@ export default function BoardVsPlayer() {
     }
 
     useEffect(() => {
-        //if (socket == null) return;
 
         socket.on('board-update', ({ newBoard, newTurn }) => {
             setBoard(newBoard);
             setTurn(newTurn);
+            setIsWinner(checkWinner(newBoard));
         });
 
         socket.on('next-round', () => {
             setIsWinner(null);
-            setBoard(() => Array(9).fill(null));
+            setBoard(Array(9).fill(null));
             setTurn('cross');
-            setIsPopupOpen(false);
+            setIsPopupResultOpen(false);
             setWinnerRow([]);
         });
 
@@ -62,32 +62,30 @@ export default function BoardVsPlayer() {
     }, [setBoard, setTurn, socket, setIsWinner, setScore, handleRestartGame]);
 
     useEffect(() => {
-        setIsWinner(checkWinner(board));
-    }, [board, setIsWinner]);
 
-    const setFinishedGame = async () => {
         if (!isWinner) return;
 
-        const { winner, winnerRow } = isWinner;
+        const setFinishedGame = async () => {
+            const { winner, winnerRow } = isWinner;
 
-        await delay(500);
-        setWinnerRow(winnerRow);
-        setWinnerClass(winner);
+            await delay(500);
+            setWinnerRow(winnerRow);
+            setWinnerClass(winner);
 
-        const newScore = { ...score };
-        newScore[winner] += 1;
-        setScore(newScore);
+            const newScore = { ...score };
+            newScore[winner] += 1;
+            setScore(newScore);
 
-        setIsWinner(null);
+            setIsWinner(null);
 
-        await delay(winner === 'tie' ? 100 : 1000);
+            await delay(winner === 'tie' ? 100 : 1000);
 
-        setIsPopupOpen(true);
-    }
+            setIsPopupResultOpen(true);
+        };
 
-    useEffect(() => {
         setFinishedGame();
-    });
+
+    }, [isWinner, score, setIsWinner, setScore]);
 
     const handleQuit = () => {
         setGameType(null);
@@ -113,7 +111,7 @@ export default function BoardVsPlayer() {
                     )
                 })}
             </div>
-            <Popup show={isPopupOpen}>
+            <Popup show={isPopupResultOpen}>
                 <PopupResult winner={winnerClass} handleQuit={handleQuit} handleNextRound={handleNextRound} />
             </Popup>
         </>

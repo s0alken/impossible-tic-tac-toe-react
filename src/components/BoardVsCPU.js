@@ -24,7 +24,7 @@ export default function BoardVsCPU() {
 
     const { player1, player2, setPlayerMark, setGameType, setDifficulty } = useContext(GameConfigContext);
 
-    const [isPopupOpen, setIsPopupOpen] = useState(false);
+    const [isPopupResultOpen, setIsPopupResultOpen] = useState(false);
     const [winnerClass, setWinnerClass] = useState(null);
     const [winnerRow, setWinnerRow] = useState([]);
 
@@ -34,9 +34,9 @@ export default function BoardVsCPU() {
         if (isWinner || board[index] || turn !== player1) return;
         const newBoard = [...board];
         newBoard[index] = player1;
-        const newTurn = turn === 'circle' ? 'cross' : 'circle';
         setBoard(newBoard);
-        setTurn(newTurn);
+        setTurn(turn === 'circle' ? 'cross' : 'circle');
+        setIsWinner(checkWinner(newBoard));
     }
 
     const makeCpuMove = useCallback(async () => {
@@ -47,39 +47,38 @@ export default function BoardVsCPU() {
         await delay(700);
         setBoard(newBoard);
         setTurn(turn === 'circle' ? 'cross' : 'circle');
-    }, [board, setBoard, getMove, isWinner, player2, turn, setTurn]);
+        setIsWinner(checkWinner(newBoard));
+    }, [board, setBoard, getMove, isWinner, player2, turn, setTurn, setIsWinner]);
 
     useEffect(() => {
         if (!checkWinner(board) && turn === player2) makeCpuMove();
     }, [makeCpuMove, player2, turn, board]);
 
     useEffect(() => {
-        setIsWinner(checkWinner(board));
-    }, [board, setIsWinner]);
 
-    const setFinishedGame = async () => {
         if (!isWinner) return;
 
-        const { winner, winnerRow } = isWinner;
+        const setFinishedGame = async () => {
+            const { winner, winnerRow } = isWinner;
 
-        await delay(500);
-        setWinnerRow(winnerRow);
-        setWinnerClass(winner);
+            await delay(500);
+            setWinnerRow(winnerRow);
+            setWinnerClass(winner);
 
-        const newScore = { ...score };
-        newScore[winner] += 1;
-        setScore(newScore);
+            const newScore = { ...score };
+            newScore[winner] += 1;
+            setScore(newScore);
 
-        setIsWinner(null);
+            setIsWinner(null);
 
-        await delay(winner === 'tie' ? 100 : 1000);
+            await delay(winner === 'tie' ? 100 : 1000);
 
-        setIsPopupOpen(true);
-    }
+            setIsPopupResultOpen(true);
+        };
 
-    useEffect(() => {
         setFinishedGame();
-    });
+
+    }, [isWinner, score, setIsWinner, setScore]);
 
     const handleQuit = () => {
         setGameType(null);
@@ -91,7 +90,7 @@ export default function BoardVsCPU() {
         setIsWinner(null);
         setBoard(() => Array(9).fill(null));
         setTurn('cross');
-        setIsPopupOpen(false);
+        setIsPopupResultOpen(false);
         setWinnerRow([]);
     }
 
@@ -110,7 +109,7 @@ export default function BoardVsCPU() {
                     )
                 })}
             </div>
-            <Popup show={isPopupOpen}>
+            <Popup show={isPopupResultOpen}>
                 <PopupResult winner={winnerClass} handleQuit={handleQuit} handleNextRound={handleNextRound} />
             </Popup>
         </>
