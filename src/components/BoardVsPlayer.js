@@ -68,22 +68,24 @@ export default function BoardVsPlayer() {
         const setFinishedGame = async () => {
             const { winner, winnerRow } = isWinner;
 
-            const cells = boardRef.current.querySelectorAll('.cell');
+            if (winner !== 'tie') {
+                const cells = boardRef.current.querySelectorAll('.cell');
 
-            const winnerCells = [cells[winnerRow[0]], cells[winnerRow[1]], cells[winnerRow[2]]];
+                const winnerCells = [cells[winnerRow[0]], cells[winnerRow[1]], cells[winnerRow[2]]];
 
-            for (let i = 0; i < winnerCells.length; i++) {
-                await delay(400); 
-                winnerCells[i].classList.add("winner");
+                for (let i = 0; i < winnerCells.length; i++) {
+                    await delay(400);
+                    winnerCells[i].classList.add("winner");
+                }
             }
 
-            await delay(winner === 'tie' ? 100 : 800);
+            await delay(winner === 'tie' ? 700 : 800);
 
             const newScore = { ...score };
             newScore[winner] += 1;
 
             setScore(newScore);
-            setWinnerClass(winner); 
+            setWinnerClass(winner);
             setIsPopupResultOpen(true);
             setIsWinner(null);
         };
