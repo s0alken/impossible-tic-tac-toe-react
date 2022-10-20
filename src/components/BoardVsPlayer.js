@@ -79,7 +79,7 @@ export default function BoardVsPlayer() {
                 }
             }
 
-            await delay(winner === 'tie' ? 700 : 800);
+            await delay(700);
 
             const newScore = { ...score };
             newScore[winner] += 1;
