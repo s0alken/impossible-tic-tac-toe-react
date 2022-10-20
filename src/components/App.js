@@ -1,11 +1,11 @@
-
 import React, { useState } from "react";
-import Game from "./components/Game";
-import Main from "./components/Main";
-import Menu from "./components/Menu";
-import JoinRoom from "./components/JoinRoom";
-import { GameConfigContext } from "./context/GameConfigContext";
-import { SocketProvider } from "./context/SocketProvider";
+import '../styles/App.scss';
+import Game from "./Game";
+import Main from "./Main";
+import Menu from "./Menu";
+import JoinRoom from "./JoinRoom";
+import { GameConfigContext } from "../context/GameConfigContext";
+import { SocketProvider } from "../context/SocketProvider";
 
 function App() {
 
