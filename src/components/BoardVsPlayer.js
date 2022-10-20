@@ -1,10 +1,9 @@
 import React, { useContext, useEffect } from 'react';
-import '../styles/Board.scss';
-import Cell from './Cell';
 import checkWinner from '../utils/checkWinner';
 import { GameContext } from '../context/GameContext';
 import { GameConfigContext } from '../context/GameConfigContext';
 import { useSocket } from '../context/SocketProvider';
+import Board from './Board';
 
 export default function BoardVsPlayer() {
 
@@ -16,9 +15,6 @@ export default function BoardVsPlayer() {
         isWinner,
         setIsWinner,
         handleRestartGame,
-        setFinishedGame,
-        boardRef,
-        setIsPopupResultOpen,
         setNextRound
     } = useContext(GameContext);
 
@@ -50,24 +46,7 @@ export default function BoardVsPlayer() {
             handleRestartGame();
         });
 
-    }, [handleRestartGame, setBoard, setIsPopupResultOpen, setIsWinner, setTurn, socket, setNextRound]);
+    }, [handleRestartGame, setBoard, setIsWinner, setNextRound, setTurn, socket]);
 
-    useEffect(() => {
-        if (!isWinner) return;
-        setFinishedGame();
-    }, [isWinner, setFinishedGame]);
-
-    return (
-        <div ref={boardRef} className={`board ${playerMark} ${playerMark === turn ? 'my-turn' : ''}`}>
-            {board.map((value, index) => {
-                return (
-                    <Cell
-                        key={index}
-                        onClick={() => handleOnClick(index)}
-                        className={`cell ${value ? `cell--${value}` : ''}`}
-                    />
-                )
-            })}
-        </div>
-    )
+    <Board handleOnClick={handleOnClick} />
 }

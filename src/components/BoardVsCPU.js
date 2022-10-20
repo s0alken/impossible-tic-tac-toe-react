@@ -1,11 +1,10 @@
 import React, { useCallback, useContext, useEffect } from 'react';
-import '../styles/Board.scss';
-import Cell from './Cell';
 import checkWinner from '../utils/checkWinner';
 import { GameContext } from '../context/GameContext';
 import { GameConfigContext } from '../context/GameConfigContext';
 import useCpuMove from '../hooks/useCpuMove';
 import delay from '../utils/delay';
+import Board from './Board';
 
 export default function BoardVsCPU() {
 
@@ -15,9 +14,7 @@ export default function BoardVsCPU() {
         board,
         setBoard,
         isWinner,
-        setIsWinner,
-        setFinishedGame,
-        boardRef
+        setIsWinner
     } = useContext(GameContext);
 
     const { player1, player2 } = useContext(GameConfigContext);
@@ -48,22 +45,5 @@ export default function BoardVsCPU() {
         if (!checkWinner(board) && turn === player2) makeCpuMove();
     }, [makeCpuMove, player2, turn, board]);
 
-    useEffect(() => {
-        if (!isWinner) return;
-        setFinishedGame();
-    }, [isWinner, setFinishedGame]);
-
-    return (
-        <div ref={boardRef} className={`board ${player1} ${player1 === turn ? 'my-turn' : ''}`}>
-            {board.map((value, index) => {
-                return (
-                    <Cell
-                        key={index}
-                        onClick={() => handleOnClick(index)}
-                        className={`cell ${value ? `cell--${value}` : ''}`}
-                    />
-                )
-            })}
-        </div>
-    )
+    return <Board handleOnClick={handleOnClick} />
 }

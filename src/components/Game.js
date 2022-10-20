@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import '../styles/Game.scss';
 import Header from './Header';
 import BoardVsCPU from './BoardVsCPU';
@@ -48,6 +48,11 @@ export default function Game() {
         handleNextRound
     } = useGameActions(actionStates);
 
+    useEffect(() => {
+        if (!isWinner) return;
+        setFinishedGame();
+    }, [isWinner, setFinishedGame]);
+
     return (
         <GameContext.Provider value={{
             turn,
@@ -58,14 +63,13 @@ export default function Game() {
             setIsWinner,
             score,
             setScore,
-            setIsPopupRestartOpen,
             restartGame,
             handleRestartGame,
-            setFinishedGame,
             boardRef,
             setNextRound,
             handleNextRound,
-            setIsPopupResultOpen
+            setIsPopupResultOpen,
+            setIsPopupRestartOpen
         }}>
             <div className="game fadeInUp">
                 <Header setIsPopupRestartOpen={setIsPopupRestartOpen} />
