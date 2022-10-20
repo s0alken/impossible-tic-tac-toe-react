@@ -8,36 +8,45 @@ import { GameContext } from '../context/GameContext';
 import { GameConfigContext } from '../context/GameConfigContext';
 import Popup from './Popup';
 import PopupRestart from './PopupRestart';
-import { useSocket } from '../context/SocketProvider';
+import { useRef } from 'react';
+import PopupResult from './PopupResult';
+import useGameActions from '../hooks/useGameActions';
 
 export default function Game() {
 
     const [turn, setTurn] = useState('cross');
     const [board, setBoard] = useState(() => Array(9).fill(null));
     const [isWinner, setIsWinner] = useState(null);
+    const [winnerClass, setWinnerClass] = useState(null);
     const [score, setScore] = useState({ circle: 0, tie: 0, cross: 0 });
     const [isPopupRestartOpen, setIsPopupRestartOpen] = useState(false);
+    const [isPopupResultOpen, setIsPopupResultOpen] = useState(false);
 
     const { gameType } = useContext(GameConfigContext);
 
-    const socket = useSocket();
+    const boardRef = useRef();
 
-    const restartGame = () => {
-        if (gameType === 'player') {
-            socket.emit('game-restart');
-            return;
-        }
-
-        handleRestartGame();
+    const actionStates = {
+        isWinner,
+        setIsWinner,
+        setBoard,
+        setTurn,
+        setScore,
+        setIsPopupRestartOpen,
+        setIsPopupResultOpen,
+        score,
+        setWinnerClass,
+        boardRef
     }
 
-    const handleRestartGame = () => {
-        setIsWinner(null);
-        setBoard(() => Array(9).fill(null));
-        setTurn('cross');
-        setIsPopupRestartOpen(false);
-        setScore({ cross: 0, tie: 0, circle: 0 });
-    }
+    const {
+        restartGame,
+        handleRestartGame,
+        setFinishedGame,
+        handleQuit,
+        setNextRound,
+        handleNextRound
+    } = useGameActions(actionStates);
 
     return (
         <GameContext.Provider value={{
@@ -50,8 +59,13 @@ export default function Game() {
             score,
             setScore,
             setIsPopupRestartOpen,
-            restartGame, 
-            handleRestartGame
+            restartGame,
+            handleRestartGame,
+            setFinishedGame,
+            boardRef,
+            setNextRound,
+            handleNextRound,
+            setIsPopupResultOpen
         }}>
             <div className="game fadeInUp">
                 <Header setIsPopupRestartOpen={setIsPopupRestartOpen} />
@@ -60,6 +74,9 @@ export default function Game() {
             </div>
             <Popup show={isPopupRestartOpen} setIsPopupOpen={setIsPopupRestartOpen} closable>
                 <PopupRestart setIsPopupRestartOpen={setIsPopupRestartOpen} />
+            </Popup>
+            <Popup show={isPopupResultOpen}>
+                <PopupResult winner={winnerClass} handleQuit={handleQuit} handleNextRound={handleNextRound} />
             </Popup>
         </GameContext.Provider >
     )

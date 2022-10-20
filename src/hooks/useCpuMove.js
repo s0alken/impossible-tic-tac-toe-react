@@ -3,6 +3,7 @@ import { GameConfigContext } from '../context/GameConfigContext';
 import checkWinner from '../utils/checkWinner';
 
 export default function useCpuMove() {
+    
     const { player1, player2, difficulty } = useContext(GameConfigContext);
 
     const getMove = board => {

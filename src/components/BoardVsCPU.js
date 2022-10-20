@@ -1,8 +1,6 @@
-import React, { useCallback, useContext, useEffect, useState, useRef } from 'react';
+import React, { useCallback, useContext, useEffect } from 'react';
 import '../styles/Board.scss';
 import Cell from './Cell';
-import Popup from './Popup';
-import PopupResult from './PopupResult';
 import checkWinner from '../utils/checkWinner';
 import { GameContext } from '../context/GameContext';
 import { GameConfigContext } from '../context/GameConfigContext';
@@ -11,8 +9,6 @@ import delay from '../utils/delay';
 
 export default function BoardVsCPU() {
 
-    const boardRef = useRef();
-
     const {
         turn,
         setTurn,
@@ -20,14 +16,11 @@ export default function BoardVsCPU() {
         setBoard,
         isWinner,
         setIsWinner,
-        score,
-        setScore
+        setFinishedGame,
+        boardRef
     } = useContext(GameContext);
 
-    const { player1, player2, setPlayerMark, setGameType, setDifficulty } = useContext(GameConfigContext);
-
-    const [isPopupResultOpen, setIsPopupResultOpen] = useState(false);
-    const [winnerClass, setWinnerClass] = useState(null);
+    const { player1, player2 } = useContext(GameConfigContext);
 
     const getMove = useCpuMove();
 
@@ -56,67 +49,21 @@ export default function BoardVsCPU() {
     }, [makeCpuMove, player2, turn, board]);
 
     useEffect(() => {
-
         if (!isWinner) return;
-
-        const setFinishedGame = async () => {
-            const { winner, winnerRow } = isWinner;
-
-            if (winner !== 'tie') {
-                const cells = boardRef.current.querySelectorAll('.cell');
-
-                const winnerCells = [cells[winnerRow[0]], cells[winnerRow[1]], cells[winnerRow[2]]];
-
-                for (let i = 0; i < winnerCells.length; i++) {
-                    await delay(400);
-                    winnerCells[i].classList.add("winner");
-                }
-            }
-
-            await delay(700);
-
-            const newScore = { ...score };
-            newScore[winner] += 1;
-
-            setScore(newScore);
-            setWinnerClass(winner);
-            setIsPopupResultOpen(true);
-            setIsWinner(null);
-        };
-
         setFinishedGame();
-
-    }, [isWinner, score, setIsWinner, setScore]);
-
-    const handleQuit = () => {
-        setGameType(null);
-        setPlayerMark(null);
-        setDifficulty(null)
-    }
-
-    const handleNextRound = () => {
-        setIsWinner(null);
-        setBoard(() => Array(9).fill(null));
-        setTurn('cross');
-        setIsPopupResultOpen(false);
-    }
+    }, [isWinner, setFinishedGame]);
 
     return (
-        <>
-            <div ref={boardRef} className={`board ${player1} ${player1 === turn ? 'my-turn' : ''}`}>
-                {board.map((value, index) => {
-                    return (
-                        <Cell
-                            key={index}
-                            onClick={() => handleOnClick(index)}
-                            className={`cell ${value ? `cell--${value}` : ''}`}
-                        />
-                    )
-                })}
-            </div>
-            <Popup show={isPopupResultOpen}>
-                <PopupResult winner={winnerClass} handleQuit={handleQuit} handleNextRound={handleNextRound} />
-            </Popup>
-        </>
+        <div ref={boardRef} className={`board ${player1} ${player1 === turn ? 'my-turn' : ''}`}>
+            {board.map((value, index) => {
+                return (
+                    <Cell
+                        key={index}
+                        onClick={() => handleOnClick(index)}
+                        className={`cell ${value ? `cell--${value}` : ''}`}
+                    />
+                )
+            })}
+        </div>
     )
 }
