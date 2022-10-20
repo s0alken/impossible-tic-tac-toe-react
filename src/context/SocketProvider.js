@@ -2,7 +2,7 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import io from 'socket.io-client';
 import env from 'react-dotenv';
 
-const URL = env.SOCKET_URL || 'http://localhost:3000/';
+const URL = env.SOCKET_URL || 'http://localhost:5000/';
 
 const SocketContext = createContext();
 
@@ -11,6 +11,8 @@ export function useSocket() {
 }
 
 export function SocketProvider({ roomId, children }) {
+
+    console.log(URL)
     
     const [socket, setSocket] = useState();
 
