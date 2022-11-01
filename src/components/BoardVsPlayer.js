@@ -48,5 +48,5 @@ export default function BoardVsPlayer() {
 
     }, [handleRestartGame, setBoard, setIsWinner, setNextRound, setTurn, socket]);
 
-    <Board handleOnClick={handleOnClick} />
+    return <Board handleOnClick={handleOnClick} />
 }
