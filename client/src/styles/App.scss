@@ -9,6 +9,11 @@
   box-sizing: inherit;
 }
 
+html,
+body {
+  height: 100%;
+}
+
 html {
   box-sizing: border-box;
   font-size: 62.5%;
@@ -22,12 +27,6 @@ body {
   letter-spacing: .0875rem;
 
   width: 100%;
-  min-height: 100vh;
-
-  /* overflow: hidden;
-  position: absolute;
-  top: 0;
-  left: 0; */
 
   background-color: $dark-navi;
 }
