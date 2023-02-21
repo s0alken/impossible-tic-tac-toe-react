@@ -1,8 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import io from 'socket.io-client';
-import env from 'react-dotenv';
 
-const URL = env.SOCKET_URL || 'http://localhost:5000/';
+const URL = process.env.REACT_APP_SOCKET_URL || 'http://localhost:5000/';
 
 const SocketContext = createContext();
 
