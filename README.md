@@ -1,7 +1,7 @@
 
 # Impossible Tic Tac Toe
 
-The classic tic tac toe game with difficulty levels and an online mode. This is a [Frontendmentor challenge](https://www.frontendmentor.io/challenges/tic-tac-toe-game-Re7ZF_E2v). Visit the live demo [HERE](https://impossible-tic-tac-toe-react.netlify.app/).
+The classic tic tac toe game with difficulty levels and online mode. This is a [Frontendmentor challenge](https://www.frontendmentor.io/challenges/tic-tac-toe-game-Re7ZF_E2v). Visit the live demo [HERE](https://impossible-tic-tac-toe-react.netlify.app/).
 
 ## Technologies used
  - [React](https://es.reactjs.org/)
@@ -14,7 +14,7 @@ The classic tic tac toe game with difficulty levels and an online mode. This is 
 
 ### Difficulty levels
 
-The difficulty levels are implemented by using the [Minimax Algorithm](https://www.geeksforgeeks.org/minimax-algorithm-in-game-theory-set-1-introduction/) which computes all possible moves that a player can make, and then recursively simulates all the possible moves that the opponent can make in response to each of those moves. Also, it makes use of a simple probability function to decide whether to make a perfect move if true or a random move if false:
+The difficulty levels are implemented by using the [Minimax Algorithm](https://www.geeksforgeeks.org/minimax-algorithm-in-game-theory-set-1-introduction/) which computes all possible moves that a player can make, and then recursively simulates all the possible moves that the opponent can make in response to each of those moves. Also, it makes use of a simple probability function to decide whether to make a perfect or a random move:
 
 ```
 const probability = n => {
