@@ -1,7 +1,11 @@
 
 # Impossible Tic Tac Toe
 
-The classic tic tac toe game with difficulty levels and online mode. This is a [Frontendmentor challenge](https://www.frontendmentor.io/challenges/tic-tac-toe-game-Re7ZF_E2v). Visit the live demo [HERE](https://impossible-tic-tac-toe-react.netlify.app/).
+The classic Tic Tac Toe game with difficulty levels and online mode. This is a [Frontendmentor challenge](https://www.frontendmentor.io/challenges/tic-tac-toe-game-Re7ZF_E2v). Visit the live demo [HERE](https://impossible-tic-tac-toe-react.netlify.app/).
+
+![screenshot_1](https://user-images.githubusercontent.com/57046544/225473234-fed03e84-12d8-4155-8b21-79e1c2563d2a.png)
+
+![screenshot_2](https://user-images.githubusercontent.com/57046544/225473274-64618829-b910-4582-a9ff-4aa9a58b3d1f.png)
 
 ## Technologies used
  - [React](https://es.reactjs.org/)
@@ -31,7 +35,7 @@ const probability = n => {
 
 The game also includes an online mode that uses WebSockets for real-time communication between players, when a player makes a move, the current board state is sent to the server and then broadcast back to all the clients. 
 
-## Running Locally
+## Running locally
 
 Install dependencies in both client and server folders
 
@@ -51,7 +55,7 @@ Start the client (available at http://localhost:3000)
   npm start
 ```
 
-## Playing the Game
+## Playing the game
 
 When entering the game, you will be prompted to choose your player's mark and the game type:
 
