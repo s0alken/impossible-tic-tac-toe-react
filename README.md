@@ -3,9 +3,9 @@
 
 The classic Tic Tac Toe game with difficulty levels and online mode. This is a [Frontendmentor challenge](https://www.frontendmentor.io/challenges/tic-tac-toe-game-Re7ZF_E2v). Visit the live demo [HERE](https://impossible-tic-tac-toe-react.netlify.app/).
 
-![screenshot_1](https://user-images.githubusercontent.com/57046544/225473234-fed03e84-12d8-4155-8b21-79e1c2563d2a.png)
+![screenshot_1](https://user-images.githubusercontent.com/57046544/225476773-5bf5c8b0-88b1-4abb-9040-c0b376dfa498.png)
 
-![screenshot_2](https://user-images.githubusercontent.com/57046544/225473274-64618829-b910-4582-a9ff-4aa9a58b3d1f.png)
+![screenshot_2](https://user-images.githubusercontent.com/57046544/225476783-5e5bcb59-f342-432d-a466-8ef20ccea184.png)
 
 ## Technologies used
  - [React](https://es.reactjs.org/)
