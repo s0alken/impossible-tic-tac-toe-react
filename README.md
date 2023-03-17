@@ -18,7 +18,7 @@ The classic Tic Tac Toe game with difficulty levels and online mode. This is a [
 
 ### Difficulty levels
 
-The difficulty levels are implemented by using the [Minimax Algorithm](https://www.geeksforgeeks.org/minimax-algorithm-in-game-theory-set-1-introduction/) which computes all possible moves that a player can make, and then recursively simulates all the possible moves that the opponent can make in response to each of those moves. Also, it makes use of a simple probability function to decide whether to make a perfect or a random move:
+The difficulty levels are implemented by using the [Minimax Algorithm](https://www.geeksforgeeks.org/minimax-algorithm-in-game-theory-set-1-introduction/) which computes all possible moves that a player can make, and then recursively simulates all the possible moves that the opponent can make in response to each of those moves. Also, it makes use of a simple probability function to decide whether to make a perfect move or a random move:
 
 ```
 const probability = n => {
@@ -65,4 +65,4 @@ You will be promted to choose the difficulty level, once picked, the game will s
 
 ### Vs Player
 
-You can join a room or create a new room. The game will start automatically when the second player joins the room. The second player's mark will be automatically be assigned the opposite of the 1st player's mark.
+You can join a room or create a new room. The game will start automatically when the second player joins the room. The second player's mark will be automatically assigned the opposite of the 1st player's mark.
